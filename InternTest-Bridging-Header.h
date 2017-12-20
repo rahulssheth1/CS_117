@@ -8,8 +8,6 @@
 
 #ifndef InternTest_Bridging_Header_h
 #define InternTest_Bridging_Header_h
-#import <MailCore/MailCore.h>
-#import <MailCore/MCOConstants.h>
 
 
 #endif /* InternTest_Bridging_Header_h */

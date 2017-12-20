@@ -53,6 +53,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
     let videoTextLabel = UILabel()
     let uid = FIRAuth.auth()?.currentUser?.uid
     let ai = UIActivityIndicatorView()
+    var positionSlashInstituionLabel = UILabel()
     
     var firstVideoImageView = UIImageView()
     var firstVideoURl = String()
@@ -103,11 +104,41 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func handleURL(sender: urlTap) {
-        if (sender.urlString != "") {
+        if (sender.urlString != "" && sender.urlString.contains("https://")) {
       openURL(url: sender.urlString)
         } else {
             let alert = UIAlertController(title: "Failure", message: "No link available. Feel free to add one in.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Upload", style: .default, handler: { (error) in
+            
+                let alert = UIAlertController(title: "Add in a link", message: nil, preferredStyle: .alert)
+                alert.addTextField(configurationHandler: { (textField) in
+                    
+                    textField.placeholder = "LinkedIn Link (include https://)"
+                    
+                    
+                })
+                alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (error) in
+                    
+                    let ref = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!)
+                    if (alert.textFields?[0].text! != "") {
+                        let value = NSString(string: (alert.textFields?[0].text!)!)
+                        let upload = ["linkedInLink": value]
+                        ref.updateChildValues(upload)
+                        DispatchQueue.main.async {
+                            self.checkIfUserLoggedInAsStudent()
+                        }
+                    }
+                    
+                }))
+                self.present(alert, animated: true, completion: nil)
+
+
+            
+            }))
+            alert.addAction(UIAlertAction(title: "Find your profile link", style: .default, handler: { (error) in
+                    self.openURL(url: "https://www.linkedin.com/help/linkedin/answer/49315/finding-your-linkedin-public-profile-url?lang=en")
+                
+            }))
             present(alert, animated: true, completion: nil)
         }
     }
@@ -115,10 +146,8 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         let passedURL = URL(string: url)
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(passedURL!, options: [:], completionHandler: nil)
-            print(passedURL, "This is the passdURL")
         } else {
             UIApplication.shared.openURL(passedURL!)
-            print(passedURL, "This is the passdURL")
 
         }
     }
@@ -195,7 +224,6 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         do {
             try FIRAuth.auth()?.signOut()
         } catch let logoutError {
-            print(logoutError)
         }
         
         let segueController = LandingPageViewController()
@@ -250,9 +278,16 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
                     } else {
                         self.nameLabel.text = "Placeholder"
                     }
+                    self.positionSlashInstituionLabel.text = ""
+                    if (dictionary["Major"] as? String != nil) {
+                        self.positionSlashInstituionLabel.text = dictionary["Major"] as! String
+                        
+                    }
                     if dictionary["Unversity"] as! String? != nil {
-                        self.nameLabel.text?.append(" - ")
-                        self.nameLabel.text?.append((dictionary["Unversity"] as! String?)!)
+                        if (self.positionSlashInstituionLabel.text != "") {
+                        self.positionSlashInstituionLabel.text?.append(" | ")
+                        }
+                        self.positionSlashInstituionLabel.text?.append(dictionary["Unversity"] as! String)
                     }
                    
                     
@@ -310,6 +345,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
                         self.supplementalVideoURL3 = "AddIcon"
                     }
                     if (dictionary["linkedInLink"] as! String? != nil) {
+                        
                         self.linkedInTap.urlString = (dictionary["linkedInLink"] as! String?)!
                     }
                     if (dictionary["githubLink"] as! String? != nil) {
@@ -662,6 +698,12 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         
         return randString
     }
+    
+    func editPositionSlashInstitution() {
+         let segueController = EditPositionViewController()
+         present(segueController, animated: true, completion: nil)
+        
+    }
 
     
     
@@ -694,7 +736,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             case 1:
                 return 200
             case 2:
-                return 200
+                return 250
             case 3:
                 return 200
             case 4:
@@ -789,16 +831,6 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             if (profileImageURL == nil) {
             ai.startAnimating()
             }
-//            cell.addSubview(fullLabel)
-//            fullLabel.translatesAutoresizingMaskIntoConstraints = false
-//            fullLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-//            fullLabel.widthAnchor.constraint(equalToConstant: cell.bounds.width * 0.6).isActive = true
-//            fullLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 15).isActive = true
-//            fullLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
-//            fullLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
-//            
-//            fullLabel.lineBreakMode = .byWordWrapping
-//            fullLabel.numberOfLines = 0
            break
             
             
@@ -811,9 +843,32 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             titleLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
             titleLabel.font = UIFont(name: "AppleSDGothicNeo-Light", size: 24)
             
+            cell.addSubview(positionSlashInstituionLabel)
+            if (positionSlashInstituionLabel.text == "") {
+                if (globalFeedString == "Employer") {
+                    positionSlashInstituionLabel.text = "Insert Major/University"
+                } else {
+                    positionSlashInstituionLabel.text = "Insert Company/Position"
+                }
+            }
+            positionSlashInstituionLabel.translatesAutoresizingMaskIntoConstraints = false
+            positionSlashInstituionLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            positionSlashInstituionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20).isActive = true
+            positionSlashInstituionLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 14)
+            
+            let editButton = UIButton()
+            cell.addSubview(editButton)
+            editButton.translatesAutoresizingMaskIntoConstraints = false
+            editButton.leftAnchor.constraint(equalTo: positionSlashInstituionLabel.rightAnchor, constant: 5).isActive = true
+            editButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+            editButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+            editButton.centerYAnchor.constraint(equalTo: positionSlashInstituionLabel.centerYAnchor).isActive = true
+            editButton.setBackgroundImage(UIImage(named: "PencilIcon"), for: .normal)
+            editButton.addTarget(self, action: #selector(editPositionSlashInstitution), for: .touchUpInside)
+            
             cell.addSubview(fullLabel)
             fullLabel.translatesAutoresizingMaskIntoConstraints = false
-            fullLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
+            fullLabel.topAnchor.constraint(equalTo: positionSlashInstituionLabel.bottomAnchor, constant: 10).isActive = true
             fullLabel.widthAnchor.constraint(equalToConstant: cell.bounds.width * 0.6).isActive = true
             fullLabel.heightAnchor.constraint(equalToConstant: 80).isActive = true
             fullLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
@@ -829,7 +884,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             changeButton.topAnchor.constraint(equalTo: fullLabel.bottomAnchor, constant: height2 * 0.04).isActive = true
             
             changeButton.heightAnchor.constraint(equalToConstant: height2 * 0.05).isActive = true
-            changeButton.setTitle("Update Skills", for: .normal)
+            changeButton.setTitle("Update Bio", for: .normal)
             changeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
             changeButton.setTitleColor(UIColor.white, for: .normal)
             changeButton.layer.cornerRadius = 10

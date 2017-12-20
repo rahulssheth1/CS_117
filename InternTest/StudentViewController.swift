@@ -220,7 +220,7 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
                 let formatter = DateFormatter()
                 formatter.timeStyle = .long
                 formatter.dateStyle = .long
-                let printString = formatter.string(from: date)
+                let String = formatter.string(from: date)
                 let todoItem = TodoItem()
                 
                 todoItem.title = "Reminders"
@@ -372,19 +372,26 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
                         self.fullLabel.text = dictionary["Bio"] as! String?
                     }
                     
-                    if dictionary["name"] as! String? != nil {
-                        self.nameLabel.text = dictionary["name"] as! String?
+                    if dictionary["Name"] as! String? != nil {
+                        self.nameLabel.text = dictionary["Name"] as! String?
                     } else {
                         self.nameLabel.text = "Placeholder"
                     }
                     
                     if (dictionary["Occupation"] as? String == "Employer") {
+                        if (dictionary["Company"] as? String != nil) {
                         self.companyLabel.text = dictionary["Company"] as! String
+                        }
+                        if (dictionary["Employee Position"] as? String != nil) {
                         self.positionLabel.text = dictionary["Employee Position"] as! String
-                    }
-                    else {
+                        }
+                    } else {
+                        if (dictionary["Unversity"] as? String != nil) {
                         self.companyLabel.text = dictionary["Unversity"] as! String?
+                        }
+                        if (dictionary["Major"] as? String != nil) {
                         self.positionLabel.text = dictionary["Major"] as! String?
+                        }
                     }
                     
                     
@@ -1035,13 +1042,13 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
             changeButton.topAnchor.constraint(equalTo: linkedInTap.bottomAnchor, constant: 50).isActive = true
             
             changeButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-            changeButton.setTitle("Add More Links", for: .normal)
+            changeButton.setTitle("See More Links", for: .normal)
             changeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
             changeButton.setTitleColor(UIColor.white, for: .normal)
             changeButton.layer.cornerRadius = 10
             changeButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
             changeButton.addTarget(self, action: #selector(moveToLinks), for: .touchUpInside)
-            
+             
 
             
           

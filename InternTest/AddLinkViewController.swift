@@ -36,10 +36,8 @@ class AddLinkViewController: UIViewController, UITableViewDelegate, UITableViewD
         let passedURL = URL(string: url)
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(passedURL!, options: [:], completionHandler: nil)
-            print(passedURL, "This is the passdURL")
         } else {
             UIApplication.shared.openURL(passedURL!)
-            print(passedURL, "This is the passdURL")
             
         }
     }
@@ -56,7 +54,6 @@ class AddLinkViewController: UIViewController, UITableViewDelegate, UITableViewD
         })
         
         alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (error) in
-            print(alert.textFields?[0].text, "This is the title")
             let title = NSString(string: (alert.textFields?[0].text)!)
             let url = NSString(string: (alert.textFields?[1].text)!)
             let value = ["Link Title": title, "Link URL": url]
@@ -233,6 +230,7 @@ class AddLinkViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func fetchLinks() {
         ref.observe(.childAdded, with: { (snapshot) in
+            
             let dictionary = snapshot.value as? [String: AnyObject]
             let link = Link()
             if (dictionary?["Link Title"] as? String != nil) {

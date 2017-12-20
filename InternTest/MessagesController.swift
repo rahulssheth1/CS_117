@@ -29,7 +29,7 @@ class MessagesController: UIViewController, UITableViewDelegate, UITableViewData
         do {
             try FIRAuth.auth()?.signOut()
         } catch let logoutError {
-            print(logoutError)
+            
         }
         let segueController = LandingPageViewController()
         present(segueController, animated: true, completion: nil)
@@ -473,6 +473,7 @@ class MessagesController: UIViewController, UITableViewDelegate, UITableViewData
         cell.addSubview(cellImageView)
         cell.addSubview(lastMessage)
         cell.addSubview(timeStamp)
+            
         //This is the profilePicture image view 
             var list = [User]()
             if (searchController.isActive == true && searchController.searchBar.text != "") {

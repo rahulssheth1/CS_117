@@ -12,7 +12,7 @@ target 'InternTest' do
 	pod 'Firebase/Database'
 	pod 'Firebase/Auth'
 	pod 'Firebase/Storage'
-  	pod 'mailcore2-ios'  	
+  	pod 'mailgun' 	
     
 
   target 'InternTestTests' do

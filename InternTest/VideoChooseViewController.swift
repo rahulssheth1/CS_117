@@ -116,16 +116,16 @@ class VideoChooseViewController: UIViewController, UIImagePickerControllerDelega
 //            let uploadTask = storageReference.putFile(videoURL, metadata: nil, completion: { (metadata, error) in
 //              
 //                if (error == nil) {
-//                    print("successful upload")
+//                    ("successful upload")
 //                    
 //                } else {
-//                    print("Here is your error", error)
+//                    ("Here is your error", error)
 //                }
 //                
 //                if let storageURL = metadata?.downloadURL()?.absoluteString {
-//                    print(videoString)
+//                    (videoString)
 //                    let value = [videoString: storageURL ]
-//                    print(storageURL, " This is the storageURL")
+//                    (storageURL, " This is the storageURL")
 //                    let ref = FIRDatabase.database().reference().child("users").child(uid!)
 //                    ref.updateChildValues(value)
 //                }
@@ -136,9 +136,9 @@ class VideoChooseViewController: UIViewController, UIImagePickerControllerDelega
 //            //Fix so it updates individual about the upload of their video
 //            let observe = uploadTask.observe(.progress, handler: { (snapshot) in
 //                let message = "\(snapshot.progress?.fractionCompleted)! * 100.0"
-//                print(message)
+//                (message)
 //                if (snapshot.progress?.fractionCompleted == 1.0) {
-//                    print("Congrats")
+//                    ("Congrats")
 //                    ai.stopAnimating()
 //                    label.isHidden = true 
 //                    let alert = UIAlertController(title: "Congrats", message: "Video was successfully upload", preferredStyle: .alert)
@@ -161,7 +161,7 @@ class VideoChooseViewController: UIViewController, UIImagePickerControllerDelega
 //            if let uploadData = UIImagePNGRepresentation(thumbnailCGImage!) {
 //                ref.put(uploadData, metadata: nil , completion: { (metadata, error) in
 //                    if (error != nil) {
-//                        print(error)
+//                        (error)
 //                        return
 //                    }
 //                    if let thumbnailImageURL = metadata?.downloadURL()?.absoluteString {
@@ -202,7 +202,6 @@ class VideoChooseViewController: UIViewController, UIImagePickerControllerDelega
             let cgImage =  try imgGenerator.copyCGImage(at: CMTimeMake(1, 60), actualTime: nil)
             return UIImage(cgImage: cgImage)
         } catch let error {
-            print(error)
         }
         return nil
     }

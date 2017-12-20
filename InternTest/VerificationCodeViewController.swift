@@ -69,43 +69,43 @@ class VerificationCodeViewController: UIViewController {
     let passwordString = generateRandomString(length: 6)
     
     
-    //Send the email
-    let emailSession = MCOSMTPSession()
-    emailSession.hostname = "smtp.gmail.com"
-    emailSession.username = "elevatedpitchhelp@gmail.com"
-    emailSession.password = "rxbqmvdngwxihtvk"
-    emailSession.port = 465
-    emailSession.authType = MCOAuthType.saslPlain
-    emailSession.connectionType = MCOConnectionType.TLS
-    emailSession.connectionLogger = { (connectionID, type, data) in
-    if data != nil {
-    if let string = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) {
-    NSLog("Connectionlogger: \(string)")
-    
-    }
-    }
-    
-    }
-    
-    var builder = MCOMessageBuilder()
-    builder.header.to = [MCOAddress(displayName: curUser.name, mailbox: curUser.email)]
-    builder.header.from = MCOAddress(displayName: "Elevated Pitch", mailbox: "elevatedpitchhelp@gmail.com")
-    builder.header.subject = "Invitation to Elevated Pitch"
-    builder.htmlBody = "Welcome to Elevated Pitch! Use "
-    builder.htmlBody.append(passwordString)
-    builder.htmlBody.append(" as your verification code for the app")
-    let sendData = builder.data()
-    let send = emailSession.sendOperation(with: sendData)
-    send?.start { (error) in
-    if (error != nil) {
-    var errorString = "We encountered an error: "
-    errorString.append((error?.localizedDescription)!)
-    let alert = UIAlertController(title: "Failure", message: errorString, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    }
+//    //Send the email
+//    let emailSession = MCOSMTPSession()
+//    emailSession.hostname = "smtp.gmail.com"
+//    emailSession.username = "elevatedpitchhelp@gmail.com"
+//    emailSession.password = "rxbqmvdngwxihtvk"
+//    emailSession.port = 465
+//    emailSession.authType = MCOAuthType.saslPlain
+//    emailSession.connectionType = MCOConnectionType.TLS
+//    emailSession.connectionLogger = { (connectionID, type, data) in
+//    if data != nil {
+//    if let string = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) {
+//    NSLog("Connectionlogger: \(string)")
+//    
+//    }
+//    }
+//    
+//    }
+//    
+//    var builder = MCOMessageBuilder()
+//    builder.header.to = [MCOAddress(displayName: curUser.name, mailbox: curUser.email)]
+//    builder.header.from = MCOAddress(displayName: "Elevated Pitch", mailbox: "elevatedpitchhelp@gmail.com")
+//    builder.header.subject = "Invitation to Elevated Pitch"
+//    builder.htmlBody = "Welcome to Elevated Pitch! Use "
+//    builder.htmlBody.append(passwordString)
+//    builder.htmlBody.append(" as your verification code for the app")
+//    let sendData = builder.data()
+//    let send = emailSession.sendOperation(with: sendData)
+//    send?.start { (error) in
+//    if (error != nil) {
+//    var errorString = "We encountered an error: "
+//    errorString.append((error?.localizedDescription)!)
+//    let alert = UIAlertController(title: "Failure", message: errorString, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+//        self.present(alert, animated: true, completion: nil)
+//    }
+//    
+//    }
     }
     
     

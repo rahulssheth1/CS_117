@@ -49,6 +49,8 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var dict2 = [String: AnyObject]()
     var isArchived = Bool()
+    var isRequests = Bool()
+    
     deinit {
         
     }
@@ -164,7 +166,9 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         continueButton.user = (sender?.user)!
         }
         continueButton.layer.cornerRadius = 10
+        if (sender?.tag != nil) {
         continueButton.tag = (sender?.tag)!
+        }
         continueButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
         continueButton.addTarget(self, action: #selector(removeHelpView), for: .touchUpInside)
         
@@ -305,7 +309,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         ref.child("users").child(uid!).observe(.value, with: { (snapshot) in
             
-            if (snapshot.value as! [String: AnyObject] != nil) {
+            if (snapshot.value as? [String: AnyObject] != nil) {
             let dictionary = snapshot.value as! [String: AnyObject]
             
             if (dictionary["profileImageURL"] as? String != nil) {
@@ -325,7 +329,23 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     //When you press Yes, this is what happens. Registers as friend, uploads Notification and moves to their view controller 
     func handleYesButton(sender: AnyObject? ) {
-        
+        if (globalFeedString == "Employer") {
+            let childRef = ref.child("users").child(uid!).child("Pending").child((sender?.user.uid)!)
+            let values = ["Friends?": "Yes"]
+            childRef.updateChildValues(values)
+            
+            let otherRef = ref.child("users").child((sender?.user.uid)!).child("Requests").child(uid!)
+            otherRef.updateChildValues(values)
+            
+        } else {
+            let childRef = ref.child("users").child(uid!).child("friends").child((sender?.user.uid)!)
+            let values = ["Friends?": "Yes"]
+            childRef.updateChildValues(values)
+            
+            let otherRef = ref.child("users").child((sender?.user.uid)!).child("friends").child(uid!)
+            otherRef.updateChildValues(values)
+            
+        }
         let childRef = ref.child("users").child(uid!).child("friends").child((sender?.user.uid)!)
         let values = ["Friends?": "Yes"]
         childRef.updateChildValues(values)
@@ -442,6 +462,70 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    func fetchRequests() {
+        self.userList.removeAll()
+        
+        ref.child("users").child(self.uid!).child("Requests").observe(.childAdded, with: { (snapshot) in
+            if (snapshot.hasChildren()) {
+                let user = User()
+                user.uid = snapshot.key
+                
+                self.ref.child("users").child(user.uid).observe(.value, with: { (snapshot2) in
+                    let dictionary = snapshot2.value as! [String: AnyObject]
+                    if ((dictionary["name"] as? String) != nil) {
+                        user.name = (dictionary["name"] as? String)!
+                    } else {
+                        user.name = "Placeholder"
+                    }
+                    if ((dictionary["userVideoURL"] as? String) != nil) {
+                        
+                        user.videoURL = dictionary["userVideoURL"] as! String
+                    }
+                    
+                    if ((dictionary["Occupation"] as? String) != nil) {
+                        user.occupation = (dictionary["Occupation"] as? String)!
+                        user.companyLabel = (dictionary["Occupation"] as? String)!
+                        if (user.occupation == "Employer" && dictionary["Company"] as? String != nil) {
+                            user.companyLabel = (dictionary["Company"] as? String)!
+                        } else if (user.occupation == "Student" && dictionary["Unversity"] as? String != nil) {
+                            user.companyLabel = (dictionary["Unversity"] as? String)!
+                        }
+                    }
+                    
+                    if (dictionary["thumbnailImageURL"] as! String?) != nil {
+                        user.thumbnailImageURL = (dictionary["thumbnailImageURL"] as! String?)!
+                        
+                        
+                        
+                    }
+                    if ((dictionary["profileImageURL"] as! String?) != nil) {
+                        user.profileImageURL = (dictionary["profileImageURL"] as! String?)!
+                    } else {
+                        user.profileImageURL = "NIL"
+                    }
+                    
+                    
+                    self.userList.append(user)
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        
+                    }
+                    
+                    
+
+                
+                
+                
+                })
+            }
+        
+        
+        
+        
+        
+        })
+    }
+    
     func fetchArchive() {
         self.userList.removeAll()
         
@@ -509,6 +593,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var dict3 = [String: AnyObject]()
         var keys = [String]()
         ref.child("users").observe(.value, with: {  (snapshot) in
+            if (snapshot.value as? [String: AnyObject]  != nil) {
             let topDict = snapshot.value as! [String: AnyObject]
                 let dict2 = topDict[self.uid!]
             if (dict2?["Archived"] as? [String: AnyObject] != nil) {
@@ -523,15 +608,13 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
             
             for i in 0..<topDict.count {
+                if (topDict[topDict.index(topDict.startIndex, offsetBy: i)].value as? [String: AnyObject] != nil) {
                 let dictionary = topDict[topDict.index(topDict.startIndex, offsetBy: i)].value as! [String: AnyObject]
                 
-                
-                    
                     if ((dictionary["Occupation"] as? String) != globalFeedString) {
                         recruiterOrAll = false
-                    
-                    
-                    
+                        print("Error message here", dictionary["Occupation"] as? String)
+                        print(globalFeedString, "This is the String")
                     } else {
                         recruiterOrAll = true
                     }
@@ -678,14 +761,14 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             
                             }
                         }
-                        
+                    }
                     }
                     
                 }
+            }
             
         })
         refreshControl.endRefreshing()
-//        self.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         
     }
     
@@ -849,7 +932,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         ref.child("users").child(uid!).observeSingleEvent(of: .value, with:
             { (snapshot) in
-                
+                print(snapshot.value as? [String: AnyObject])
                 if let dictionary = snapshot.value as? [String: AnyObject]  {
                     if (dictionary["name"] as? String != nil) {
                     globalCurrentName = (dictionary["name"] as? String)!
@@ -864,7 +947,6 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                     if (dictionary["HelpViews"] != nil) {
                     self.dict2 = (dictionary["HelpViews"] as? [String: AnyObject])!
-                        print(self.dict2, "This is the dictionary")
                     if (self.dict2["FirstTimeSignUp"] as? String != nil) {
                         if (self.dict2["FirstTimeSignUp"] as? String == "true") {
                         self.feed()
@@ -888,9 +970,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     }
                         if (self.dict2["FirstTimeCalendar"] as? String != nil) {
                             if (self.dict2["FirstTimeCalendar"] as? String == "true") {
-                                print("Hello")
                                 firstTimeCalendar = true
-                                print(firstTimeCalendar, "This is also firstTimeCalendar")
                             }
                         } else {
                             firstTimeCalendar = false
@@ -918,6 +998,8 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if (isArchived) {
             fetchArchive()
+        } else if (isRequests) {
+            fetchRequests()
         } else {
         fetchUsers()
         }
@@ -1013,6 +1095,10 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    func handleGiveAdvice(sender: GenericCellButton) {
+        
+    }
+    
     
     
     
@@ -1027,11 +1113,27 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
      func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (userList.count == 0) {
+            return 1
+        }
         return userList.count
     }
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = FeedTableViewCell(style: .subtitle, reuseIdentifier: cellID)
-
+        print(userList.count, "This is the count")
+        
+        if (userList.count == 0) {
+            tableView.backgroundColor = UIColor.lightGray
+            cell.backgroundColor = UIColor.lightGray
+            let errorLabel = UILabel()
+            cell.addSubview(errorLabel)
+            errorLabel.translatesAutoresizingMaskIntoConstraints = false
+            errorLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            errorLabel.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+            errorLabel.text = "No Users"
+            errorLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 24)
+            errorLabel.textColor = UIColor.darkGray
+        } else {
         let border = CALayer()
         let borderWidth = CGFloat(5.0)
         border.borderColor = UIColor.lightGray.cgColor
@@ -1162,6 +1264,20 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cellLabel.addTarget(self, action: #selector(handleScreenshot), for: .touchUpInside)
         
         
+        let messageButton = GenericCellButton()
+        cell.addSubview(messageButton)
+        messageButton.translatesAutoresizingMaskIntoConstraints = false
+        messageButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        messageButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        messageButton.setBackgroundImage(UIImage(named: "informationIcon"), for: .normal)
+        messageButton.topAnchor.constraint(equalTo: cell.topAnchor, constant: 20).isActive = true
+        messageButton.rightAnchor.constraint(equalTo: cell.rightAnchor, constant: -20).isActive = true
+        messageButton.addTarget(self, action: #selector(handleGiveAdvice), for: .touchUpInside)
+        if (globalFeedString == "Employer") {
+            messageButton.isHidden = true
+        }
+        
+        }
        
         return cell
     }

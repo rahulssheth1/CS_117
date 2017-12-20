@@ -1,4 +1,5 @@
 PODS:
+  - AFNetworking (1.1.0)
   - Firebase (3.8.0):
     - Firebase/Core (= 3.8.0)
   - Firebase/Auth (3.8.0):
@@ -46,7 +47,8 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
   - GTMSessionFetcher/Core (1.1.7)
-  - mailcore2-ios (0.6.4)
+  - mailgun (1.0.3):
+    - AFNetworking (~> 1.1.0)
 
 DEPENDENCIES:
   - Firebase
@@ -54,9 +56,10 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
-  - mailcore2-ios
+  - mailgun
 
 SPEC CHECKSUMS:
+  AFNetworking: e6427e782b25a2289d909960df8ef41358b3277c
   Firebase: fdbecadb7b5cbef2774852d4fa659b9daf11f2af
   FirebaseAnalytics: 6e58fc9b397664369ac7617fb0ba93fab6ba7b5b
   FirebaseAuth: 96e9674ff31d6e1f826d53e26aa003a57cab0295
@@ -68,8 +71,8 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
-  mailcore2-ios: 3ff0be2fa553d4da9c11d39c11d51863c768f24f
+  mailgun: 17290deea4db24050dd03ca59cd7385d508904b3
 
-PODFILE CHECKSUM: 9b4f01001031f5af0411ecc264d600041184cd7e
+PODFILE CHECKSUM: 01448a3b9553e4fc902f95cd9beb0cfd77f716f8
 
 COCOAPODS: 1.1.1

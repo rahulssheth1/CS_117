@@ -24,7 +24,6 @@ class SettingsViewController: UIViewController {
         do {
             try FIRAuth.auth()?.signOut()
         } catch let logoutError {
-            print(logoutError)
         }
         
         let segueController = LandingPageViewController()
@@ -39,7 +38,11 @@ class SettingsViewController: UIViewController {
         present(segueController, animated: true, completion: nil)
     }
     
-    
+    func handleRequestsMove() {
+        let segueController = FeedController(nibName: nil, bundle: nil)
+        segueController.isRequests = true
+        present(segueController, animated: true, completion: nil)
+    }
     
     func handleMoveToPasswordReset() {
         let credential = FIREmailPasswordAuthProvider.credential(withEmail: (FIRAuth.auth()?.currentUser?.email)!, password: password1TextField.text!)
@@ -171,6 +174,25 @@ class SettingsViewController: UIViewController {
         archiveButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
         archiveButton.addTarget(self, action: #selector(handleArchiveMove), for: .touchUpInside)
         
+        
+        let requestsButton = UIButton()
+        self.view.addSubview(requestsButton)
+        if (globalFeedString == "Employer") {
+            requestsButton.isHidden = true
+        }
+        requestsButton.translatesAutoresizingMaskIntoConstraints = false
+        requestsButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        requestsButton.widthAnchor.constraint(equalToConstant: self.view.bounds.width * 0.65).isActive = true
+        requestsButton.topAnchor.constraint(equalTo: archiveButton.bottomAnchor, constant: self.view.bounds.height * 0.03).isActive = true
+        requestsButton.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.05).isActive = true
+        requestsButton.setTitle("See Requests", for: .normal)
+        requestsButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+        requestsButton.setTitleColor(UIColor.white, for: .normal)
+        requestsButton.layer.cornerRadius = 10
+        requestsButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
+        requestsButton.addTarget(self, action: #selector(handleRequestsMove), for: .touchUpInside)
+        
+
         
         let logoutButton = UIButton()
         self.view.addSubview(logoutButton)

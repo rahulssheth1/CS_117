@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import Firebase
-
+import mailgun
 
 //This is where Employers choose their Occupation
 class SetEmailViewController: UIViewController {
@@ -55,101 +55,75 @@ class SetEmailViewController: UIViewController {
         present(segueController, animated: true, completion: nil)
 
     }
-    func handleMoveToStudentVal() {
-//        if (checkEmailTF(email: emailTF.text!)) {
-        
-            let passwordString = generateRandomString(length: 6)
-            
-            
-            //Send the email
-            let emailSession = MCOSMTPSession()
-            emailSession.hostname = "smtp.gmail.com"
-            emailSession.username = "elevatedpitchhelp@gmail.com"
-            emailSession.password = "rxbqmvdngwxihtvk"
-            emailSession.port = 465
-            emailSession.authType = MCOAuthType.saslPlain
-            emailSession.connectionType = MCOConnectionType.TLS
-            emailSession.connectionLogger = { (connectionID, type, data) in
-                if data != nil {
-                    if let string = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) {
-                        NSLog("Connectionlogger: \(string)")
-                        
-                    }
-                }
-                
-            }
-            
-            var builder = MCOMessageBuilder()
-            builder.header.to = [MCOAddress(displayName: curUser.name, mailbox: emailTF.text)]
-            builder.header.from = MCOAddress(displayName: "Elevated Pitch", mailbox: "elevatedpitchhelp@gmail.com")
-            builder.header.subject = "Invitation to Elevated Pitch"
-            builder.htmlBody = "Welcome to Elevated Pitch! Use "
-            builder.htmlBody.append(passwordString)
-            builder.htmlBody.append(" as your verification code for the app")
-            let sendData = builder.data()
-            let send = emailSession.sendOperation(with: sendData)
-            send?.start { (error) in
-                if (error != nil) {
-                    var errorString = "We encountered an error: "
-                    errorString.append((error?.localizedDescription)!)
-                    let alert = UIAlertController(title: "Failure", message: errorString, preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                    
-                } 
-                
-            }
-        let segueController = VerificationCodeViewController()
-        curUser.verificationCode = passwordString
-        curUser.email = emailTF.text!
-        segueController.typeInt = 2
-        curUser.previousController = "SetEmailViewController"
-        segueController.curUser = curUser
-
-        FIRAuth.auth()?.fetchProviders(forEmail: curUser.email, completion: { (providers, error) in
-            
-             if  error != nil  {
-                let alert = UIAlertController(title: "Failure", message: error?.localizedDescription, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Change email", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                self.emailTF.text = ""
-            } else if providers?.count != nil {
-                let alert = UIAlertController(title: "Failure", message: "Email Address in use", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Change email", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-                self.emailTF.text = ""
-
-             } else {
-            self.present(segueController, animated: true, completion: nil)
-                self.emailTF.text = ""
-
-            }
-            
-            })
-        
-        
-
-        
-        
-        
-        
-        
-        
-//            } else {
-//            let alert = UIAlertController(title: "Failure", message: "Not from UCLA", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//        }
-        
-
-    }
+    
+    
     func checkEmailTF(email: String) -> Bool {
-        if (email.contains("g.ucla.edu") || email.contains("ucla.edu")) {
-            return true
-        }
-        return false
         
+        
+        return email.contains(".edu")
     }
+    
+    func handleMoveToStudentVal() {
+        
+        if (checkEmailTF(email: emailTF.text!)) {
+            let passwordString = self.generateRandomString(length: 6)
+                
+                
+                
+                
+                //Send the email using mailgun
+                
+                var body = String()
+                body = "Welcome to NxtPitch! Your verification code is "
+                body.append(passwordString)
+                body.append(".")
+                var message = Mailgun(baseURL: URL(string: "https://api.mailgun.net/v3")!)
+                message?.domain = "nxtpitch.com"
+                message?.apiKey = "key-bd1ab4229ca58bedffb7918e37cad2fc"
+                
+                message?.sendMessage(to: self.emailTF.text, from: "NxtPitch <register@nxtpitch.com>", subject: "Welcome to NxtPitch!", body: body, success: { (success) in
+                    }, failure: { (error) in
+                        var errorString = "We encountered an error: "
+                        errorString.append((error?.localizedDescription)!)
+                        let alert = UIAlertController(title: "Failure", message: errorString, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        
+                        
+                })
+                
+                
+                let segueController = VerificationCodeViewController()
+                self.curUser.verificationCode = passwordString
+                
+                self.curUser.email = self.emailTF.text!
+                segueController.typeInt = 2
+                self.curUser.previousController = "SetEmailViewController"
+                segueController.curUser = self.curUser
+                self.present(segueController, animated: true, completion: nil)
+                self.emailTF.text = ""
+                
+                
+                
+                
+                
+                
+        }
+        
+                
+                
+                
+                
+        
+
+            
+            
+    
+        
+    
+    
+    }
+    
     override func viewDidLoad() {
         
         self.view.backgroundColor = UIColor.white
@@ -188,7 +162,7 @@ class SetEmailViewController: UIViewController {
         emailTF.layer.borderWidth = 1
         emailTF.layer.sublayerTransform = CATransform3DMakeTranslation(5, 0, 0)
         emailTF.layer.cornerRadius = 5
-        
+        emailTF.autocapitalizationType = .none
      
         
         

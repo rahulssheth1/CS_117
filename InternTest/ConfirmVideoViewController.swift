@@ -28,7 +28,6 @@ class ConfirmVideoViewController: UIViewController {
     
     
     func MoveToVideo(sender: playButton) {
-        print("Hello")
         let url = URL(string: sender.playerURL)
         
         
@@ -106,15 +105,12 @@ class ConfirmVideoViewController: UIViewController {
                     let uploadTask = storageReference.putFile(videoURL2!, metadata: nil, completion: { (metadata, error) in
         
                         if (error == nil) {
-                            print("successful upload")
         
                         } else {
-                            print("Here is your error", error)
                         }
         
                         if let storageURL = metadata?.downloadURL()?.absoluteString {
                             let value = [videoString: storageURL ]
-                            print(storageURL, " This is the storageURL")
                             let ref = FIRDatabase.database().reference().child("users").child(uid!)
                             ref.updateChildValues(value)
                         }
@@ -127,7 +123,6 @@ class ConfirmVideoViewController: UIViewController {
                         let message = "\(snapshot.progress?.fractionCompleted)! * 100.0"
                         self.view.alpha = 0.5
                         if (snapshot.progress?.fractionCompleted == 1.0) {
-                            print("Congrats")
                             ai.stopAnimating()
                             label.isHidden = true
                             let alert = UIAlertController(title: "Congrats", message: "Video was successfully upload", preferredStyle: .alert)
@@ -150,7 +145,6 @@ class ConfirmVideoViewController: UIViewController {
                     if let uploadData = UIImagePNGRepresentation(thumbnailCGImage) {
                         ref.put(uploadData, metadata: nil , completion: { (metadata, error) in
                             if (error != nil) {
-                                print(error)
                                 return
                             }
                             if let thumbnailImageURL = metadata?.downloadURL()?.absoluteString {

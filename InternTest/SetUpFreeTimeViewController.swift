@@ -456,7 +456,6 @@ class SetUpFreeTimeViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func setUpActionSheet(sender: actionGesture) {
-        print(sender.row, "This is row")
         let alert = UIAlertController(title: "Reminder", message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (error) in
             let reminderArray = self.checkList[sender.day!]

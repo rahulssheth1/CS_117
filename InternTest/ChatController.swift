@@ -29,6 +29,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let label = UILabel()
         return label
     }()
+    var containerViewBottomAnchor = NSLayoutConstraint()
 
     let label = UILabel()
     let containerView = UIView()
@@ -105,13 +106,14 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let uid = FIRAuth.auth()?.currentUser?.uid
         let ref = FIRDatabase.database().reference().child("users").child(uid!)
         ref.observe(.value, with:  { (snapshot) in
-            
+            if (snapshot.value != nil) {
             let dictionary = snapshot.value as? [String: AnyObject]
             if (dictionary?["name"] as? String != nil) {
                 self.nameString = dictionary?["name"] as! String
             }
             if (dictionary?["profileImageURL"] as? String != nil) {
                 self.profileImageURLString = dictionary?["profileImageURL"] as! String
+            }
             }
             
         })
@@ -217,7 +219,6 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         present((self.user?.previousController)!, animated: true, completion: nil)
     }
     func dismissKeyboard() {
-        containerView.frame.origin.y = (self.view.bounds.height - 60)
 
         view.endEditing(true)
     }
@@ -259,7 +260,10 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         containerView.addSubview(sendButton)
         containerView.addSubview(messageTF)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        
+        containerViewBottomAnchor = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        containerViewBottomAnchor.isActive = true
+        
         containerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         containerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         containerView.heightAnchor.constraint(equalToConstant: 60).isActive = true
@@ -327,7 +331,7 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
         ref.updateChildValues(values)
             reference.observe(.value, with: { (snapshot) in
-            
+                if (snapshot.value as? [String: AnyObject] != nil) {
                 let dictionary = snapshot.value as! [String: AnyObject]
                 if (updateBool) {
                 if (dictionary[string1] != nil) {
@@ -338,6 +342,11 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     reference.child(string2).child("messages").childByAutoId().updateChildValues(values)
                     updateBool = false 
                 }
+                }
+                    
+                } else {
+                    reference.child(string2).child("messages").childByAutoId().updateChildValues(values)
+                    updateBool = false 
                 }
             
             })
@@ -360,7 +369,6 @@ class ChatController: UIViewController, UITableViewDelegate, UITableViewDataSour
         ref2.updateChildValues(value)
         messageTF.text = nil
         
-view.endEditing(true)
         
         }
         
@@ -378,16 +386,24 @@ view.endEditing(true)
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 //           
             tableView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height - (70 + keyboardSize.height))
-//
-//
-          
-            tableView.isScrollEnabled = false
 
-            if (self.tableView.contentSize.height > (self.tableView.frame.size.height)) {
-                tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height - (self.tableView.frame.size.height)), animated: false)
-            }
 //
-            containerView.frame.origin.y -= keyboardSize.height
+        
+            
+            
+            if (self.tableView.contentSize.height > (self.tableView.frame.size.height + keyboardSize.height)) {
+                tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentSize.height - (self.tableView.frame.size.height + keyboardSize.height)), animated: false)
+            }
+            
+            
+            UIView.animate(withDuration: 1.0, delay: 0, options: .curveLinear, animations: {
+                
+                  self.containerViewBottomAnchor.constant = -keyboardSize.height
+                
+                
+                }, completion: { (finished: Bool) in
+            })
+            
           
             
 
@@ -398,13 +414,21 @@ view.endEditing(true)
     
     func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            tableView.isScrollEnabled = true
-             tableView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height - 70)
-            if (messagesArray.count != 0) {
-            let path = IndexPath(row: messagesArray.count - 1, section: 0)
-                self.tableView.scrollToRow(at: path, at: .bottom, animated: true)
-            }
+//            tableView.isScrollEnabled = true
+//             tableView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height - 70)
+//            if (messagesArray.count != 0) {
+//            let path = IndexPath(row: messagesArray.count - 1, section: 0)
+//                self.tableView.scrollToRow(at: path, at: .bottom, animated: true)
+            
+            UIView.animate(withDuration: 1.0, delay: 0, options: .curveLinear, animations: {
+                
+                self.containerViewBottomAnchor.constant = 0
+                
+                
+                }, completion: { (finished: Bool) in
+            })
 
+//            }
 
         }
     }

@@ -218,7 +218,6 @@ class NotificationCenterViewController : UIViewController, UITableViewDelegate, 
         do {
             try FIRAuth.auth()?.signOut()
         } catch let logoutError {
-            print(logoutError)
         }
         
         let segueController = LandingPageViewController()
@@ -317,7 +316,6 @@ class NotificationCenterViewController : UIViewController, UITableViewDelegate, 
             let formatter = DateFormatter()
             formatter.dateStyle = .short
             formatter.timeStyle = .short
-            print(notification?.timeString, "This is your timeString again")
             let date = formatter.date(from: (notification?.timeString)!)
             let todoItem = TodoItem()
             
@@ -465,7 +463,6 @@ class NotificationCenterViewController : UIViewController, UITableViewDelegate, 
                 let otherRef = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("Reminders").child(day).child((notification?.user?.uid)!)
                 
                 otherRef.updateChildValues(value)
-                print(timeString1, "This is your timeString")
                 let value2 = ["Message": messageString, "OtherUID": sendingID, "Type": typeString,  "profileImageURL": imageURLString, "name": globalCurrentName as NSString, "read": "false" as NSString, "ReminderDate": timeString1 as NSString] as [String : AnyObject]
                 let ref = FIRDatabase.database().reference().child("users").child((notification?.otherUID)!).child("Notifications")
                 ref.childByAutoId().updateChildValues(value2)

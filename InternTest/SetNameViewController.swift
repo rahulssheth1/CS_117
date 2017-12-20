@@ -92,10 +92,8 @@ class SetNameViewController: UIViewController {
         let passedURL = URL(string: url)
         if #available(iOS 10.0, *) {
             UIApplication.shared.open(passedURL!, options: [:], completionHandler: nil)
-            print(passedURL, "This is the passdURL")
         } else {
             UIApplication.shared.openURL(passedURL!)
-            print(passedURL, "This is the passdURL")
             
         }
     }

@@ -138,6 +138,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //First find all the students, then find all of the majors that start with that
     func fetchMajors() {
         ref.observe(.childAdded, with: { (snapshot) in
+            if (snapshot.value as? [String: AnyObject] != nil) {
             let dictionary = snapshot.value as! [String: AnyObject]
             let user = User()
             if (dictionary["name"] as? String != nil) {
@@ -194,7 +195,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-            
+            }
         })
         
     }
@@ -370,7 +371,6 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //Major = 0, Uni = 1, Co = 2, People = 3, Skills = 4
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("In here")
         let segueController = FeedController(nibName: nil, bundle: nil)
         
         if (searchController.isActive == true && searchController.searchBar.text != "") {

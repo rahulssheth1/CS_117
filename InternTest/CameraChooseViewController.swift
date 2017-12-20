@@ -79,10 +79,7 @@ class CameraChooseViewController: UIViewController, UINavigationControllerDelega
         let someImage = pickedImageFromPicker.jpeg(.lowest)
     
         profilePictureImageView.image = UIImage(data: someImage!)
-        profilePictureImageView.image = resizeImage(image: profilePictureImageView.image!, targetSize: CGSize(width: 130, height: 130))
-        print("This is the new width", profilePictureImageView.image?.size.width)
     
-        print("This is the new height", profilePictureImageView.image?.size.height)
     }
     
     
@@ -96,7 +93,6 @@ class CameraChooseViewController: UIViewController, UINavigationControllerDelega
             storageRef.put(uploadData, metadata: nil, completion: {(metadata, error) in
                 
                 if error != nil {
-                    print(error)
                     return
                 }
                

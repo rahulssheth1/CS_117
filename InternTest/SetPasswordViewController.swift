@@ -65,7 +65,7 @@ class SetPasswordViewController: UIViewController {
                 } else {
                 let uid = user?.uid
                 let value = NSString(string: "true")
-                let dictionary = ["Name": self.curUser.name, "Email": self.curUser.email] as [String : Any]
+                let dictionary = ["Name": self.curUser.name, "Email": self.curUser.email, "Occupation": "Student" as NSString] as [String : Any]
                     let dictionary2 = ["FirstTimeSignUp": value, "FirstTimeConnect": value, "FirstTimeReject": value, "FirstTimeCalendar": value, "FirstTimeSearch": value]
                 FIRDatabase.database().reference().child("users").child(uid!).setValue(dictionary)
                 FIRDatabase.database().reference().child("users").child(uid!).child("HelpViews").updateChildValues(dictionary2)

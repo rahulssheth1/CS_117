@@ -8,6 +8,7 @@ target 'InternTest' do
   # Pods for InternTest
 
 	pod 'Firebase/Core'
+	pod 'Firebase'
 	pod 'Firebase/Database'
 	pod 'Firebase/Auth'
 	pod 'Firebase/Storage'
