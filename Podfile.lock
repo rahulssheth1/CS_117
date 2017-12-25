@@ -33,8 +33,23 @@ PODS:
   - FirebaseStorage (1.0.4):
     - FirebaseAnalytics (~> 3.4)
     - GTMSessionFetcher/Core (~> 1.1)
+  - Google/Core (3.1.0):
+    - FirebaseAnalytics (~> 3.2)
+  - Google/SignIn (3.1.0):
+    - Google/Core
+    - GoogleSignIn (~> 4.0)
+  - GoogleAPIClientForREST/Core (1.2.1):
+    - GTMSessionFetcher (>= 1.1.7)
+  - GoogleAPIClientForREST/Drive (1.2.1):
+    - GoogleAPIClientForREST/Core
+    - GTMSessionFetcher (>= 1.1.7)
   - GoogleInterchangeUtilities (1.2.2):
     - GoogleSymbolUtilities (~> 1.1)
+  - GoogleSignIn (4.1.1):
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
+    - GTMOAuth2 (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleSymbolUtilities (1.1.2)
   - GoogleToolboxForMac/DebugUtils (2.1.0):
     - GoogleToolboxForMac/Defines (= 2.1.0)
@@ -46,7 +61,13 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.0)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
+  - GTMOAuth2 (1.1.6):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.7):
+    - GTMSessionFetcher/Full (= 1.1.7)
   - GTMSessionFetcher/Core (1.1.7)
+  - GTMSessionFetcher/Full (1.1.7):
+    - GTMSessionFetcher/Core (= 1.1.7)
   - mailgun (1.0.3):
     - AFNetworking (~> 1.1.0)
 
@@ -56,6 +77,8 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
+  - Google/SignIn
+  - GoogleAPIClientForREST/Drive (~> 1.2.1)
   - mailgun
 
 SPEC CHECKSUMS:
@@ -67,12 +90,16 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 3ebb2edb6007c3f0f87b248f3fa212bde56a1468
   FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
   FirebaseStorage: c50aa353bf484072704e73b4aff1bd47adb735c4
+  Google: 98da4b1a60ed0beb80a290387a28333406a1eb90
+  GoogleAPIClientForREST: a8b95a252014ce2e618df6b75dc72eca2c00b4af
   GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
+  GoogleSignIn: 3fdaa34a2ba04dbd7a25d7db39aecb0da98d5bdc
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
+  GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
   mailgun: 17290deea4db24050dd03ca59cd7385d508904b3
 
-PODFILE CHECKSUM: 01448a3b9553e4fc902f95cd9beb0cfd77f716f8
+PODFILE CHECKSUM: 6e2b6cac3aec1effc85be2d16062ea7bd8f46973
 
 COCOAPODS: 1.1.1

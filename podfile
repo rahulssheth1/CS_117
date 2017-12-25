@@ -6,7 +6,8 @@ target 'InternTest' do
   use_frameworks!
 
   # Pods for InternTest
-
+	pod 'GoogleAPIClientForREST/Drive', '~> 1.2.1'
+	pod 'Google/SignIn'
 	pod 'Firebase/Core'
 	pod 'Firebase'
 	pod 'Firebase/Database'

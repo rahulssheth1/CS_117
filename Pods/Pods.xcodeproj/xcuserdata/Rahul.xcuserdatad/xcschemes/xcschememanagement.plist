@@ -9,7 +9,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>GTMOAuth2.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>GoogleAPIClientForREST.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -42,7 +52,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>23BA9083ED0D2392A167A8AFA04427FA</key>
+		<key>6BFC545261EAE2E154662BC2955FDA38</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,7 +67,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8EDC1E02F125A8448E42077806F3AF3A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>AE1BB5646AD48B021A589374569EDDEA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B441EF6A60D97D87590084AB17B26175</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,7 +87,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>ECB9A4911D3D3B48CAD82CE02FE1F8F9</key>
+		<key>D468777BEC2DE5127A16239373FFD11F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

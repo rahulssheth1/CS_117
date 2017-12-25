@@ -6,13 +6,14 @@ target 'InternTest' do
   use_frameworks!
 
   # Pods for InternTest
-
+	pod 'GoogleAPIClientForREST/Drive'
+	pod 'Google/SignIn'
 	pod 'Firebase/Core'
 	pod 'Firebase'
 	pod 'Firebase/Database'
 	pod 'Firebase/Auth'
 	pod 'Firebase/Storage'
-  	pod 'mailcore2-ios'  	
+  	pod 'mailgun' 	
     
 
   target 'InternTestTests' do

@@ -49,6 +49,9 @@
 		B7AE893B1F2C627500914699 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AE893A1F2C627500914699 /* ChangePasswordViewController.swift */; };
 		B7AE893D1F2FE1E000914699 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AE893C1F2FE1DF00914699 /* CustomCell.swift */; };
 		B7AE89421F36CEE800914699 /* SignUpUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7AE89411F36CEE800914699 /* SignUpUser.swift */; };
+		B7BC83C31FEDEC2800331CBC /* NXTPitchProposal.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B7BC83C21FEDEC2800331CBC /* NXTPitchProposal.pdf */; };
+		B7BC83C51FEDF32500331CBC /* ResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC83C41FEDF32500331CBC /* ResumeViewController.swift */; };
+		B7BC83C71FEF185C00331CBC /* GoogleUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC83C61FEF185C00331CBC /* GoogleUploadVC.swift */; };
 		B7C658D91E8EEB1A0081B06E /* SetPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C658D81E8EEB1A0081B06E /* SetPositionViewController.swift */; };
 		B7C658DB1E8F125C0081B06E /* StudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C658DA1E8F125C0081B06E /* StudentViewController.swift */; };
 		B7D480131F173D600080E8C2 /* SetReminderViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D480121F173D600080E8C2 /* SetReminderViewController1.swift */; };
@@ -137,6 +140,9 @@
 		B7AE893C1F2FE1DF00914699 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		B7AE89401F308D1100914699 /* InternTest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InternTest-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		B7AE89411F36CEE800914699 /* SignUpUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpUser.swift; sourceTree = "<group>"; };
+		B7BC83C21FEDEC2800331CBC /* NXTPitchProposal.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = NXTPitchProposal.pdf; sourceTree = "<group>"; };
+		B7BC83C41FEDF32500331CBC /* ResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeViewController.swift; sourceTree = "<group>"; };
+		B7BC83C61FEF185C00331CBC /* GoogleUploadVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleUploadVC.swift; sourceTree = "<group>"; };
 		B7C658D81E8EEB1A0081B06E /* SetPositionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPositionViewController.swift; sourceTree = "<group>"; };
 		B7C658DA1E8F125C0081B06E /* StudentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentViewController.swift; sourceTree = "<group>"; };
 		B7D480121F173D600080E8C2 /* SetReminderViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReminderViewController1.swift; sourceTree = "<group>"; };
@@ -331,6 +337,7 @@
 				B752D4381F0462AB00EAC75B /* OrientationLock.swift */,
 				B71483E51E711E9F00F37453 /* ImageExtension.swift */,
 				B72834561E0B158D007CD400 /* CAGradientLayer.swift */,
+				B7BC83C21FEDEC2800331CBC /* NXTPitchProposal.pdf */,
 				B7D541321ED0E0ED006282DF /* Extensions.swift */,
 				B728342D1E0B125D007CD400 /* Assets.xcassets */,
 				B7EEB1381F47D65A00F101C6 /* AnimationController.swift */,
@@ -353,6 +360,8 @@
 				B7AE89381F2BC15300914699 /* ForgotPasswordLandingViewController.swift */,
 				B7C658D81E8EEB1A0081B06E /* SetPositionViewController.swift */,
 				B7097D921E108AEC00CA1C56 /* ProfilePageViewController.swift */,
+				B7BC83C41FEDF32500331CBC /* ResumeViewController.swift */,
+				B7BC83C61FEF185C00331CBC /* GoogleUploadVC.swift */,
 				B7E3B2F21F749ADE008320C8 /* EditPositionViewController.swift */,
 				B70EE31A1F6844AF00FE4171 /* AddLinkViewController.swift */,
 				B73ABCC11F56AD2600CA91A6 /* SettingsViewController.swift */,
@@ -504,6 +513,7 @@
 			files = (
 				B72834311E0B125D007CD400 /* LaunchScreen.storyboard in Resources */,
 				B728342E1E0B125D007CD400 /* Assets.xcassets in Resources */,
+				B7BC83C31FEDEC2800331CBC /* NXTPitchProposal.pdf in Resources */,
 				B728342C1E0B125D007CD400 /* Main.storyboard in Resources */,
 				B73ABCC61F5A435500CA91A6 /* GoogleService-Info.plist in Resources */,
 			);
@@ -672,11 +682,13 @@
 				B72834291E0B125D007CD400 /* SetBirthdayViewController.swift in Sources */,
 				B7EEB1371F46DB6B00F101C6 /* SetReminderViewController2.swift in Sources */,
 				B7A2C3531F6BA7A900A550C6 /* StudentScreenshotViewController.swift in Sources */,
+				B7BC83C71FEF185C00331CBC /* GoogleUploadVC.swift in Sources */,
 				B73ABCC81F5A655900CA91A6 /* StudentScheduleViewController.swift in Sources */,
 				B7F5075D1E4F19AB002F686B /* SetPasswordViewController.swift in Sources */,
 				B752D4351EFEF6FC00EAC75B /* SetNameViewController.swift in Sources */,
 				B752D4391F0462AB00EAC75B /* OrientationLock.swift in Sources */,
 				B7097D911E0F7AA900CA1C56 /* SetEmailViewController.swift in Sources */,
+				B7BC83C51FEDF32500331CBC /* ResumeViewController.swift in Sources */,
 				B72834271E0B125D007CD400 /* AppDelegate.swift in Sources */,
 				B732FAA41E2CD480005514CE /* FeedController.swift in Sources */,
 				B7A2C3551F6FD80700A550C6 /* EditTimeViewController.swift in Sources */,

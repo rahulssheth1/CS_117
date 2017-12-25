@@ -103,6 +103,11 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    func handleMoveToResume() {
+       let segueController = ResumeViewController()
+        present(segueController, animated: true, completion: nil)
+    }
+    
     func handleURL(sender: urlTap) {
         if (sender.urlString != "" && sender.urlString.contains("https://")) {
       openURL(url: sender.urlString)
@@ -742,9 +747,9 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             case 4:
                 return height + 340
             case 5:
-                return 5 * height + 150
+                return 5 * height
             default:
-                return 120
+                return 250
                 
             }
         } else {
@@ -1251,6 +1256,20 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             changeButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
             changeButton.addTarget(self, action: #selector(moveToLinks), for: .touchUpInside)
             
+            
+            let resumeButton = UIButton()
+            cell.addSubview(resumeButton)
+            resumeButton.translatesAutoresizingMaskIntoConstraints = false
+            resumeButton.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            resumeButton.widthAnchor.constraint(equalTo: changeButton.widthAnchor).isActive = true
+            resumeButton.topAnchor.constraint(equalTo: changeButton.bottomAnchor, constant: 50).isActive = true
+            resumeButton.setTitle("See Resume", for: .normal)
+            resumeButton.addTarget(self, action: #selector(handleMoveToResume), for: .touchUpInside)
+            resumeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+            resumeButton.setTitleColor(UIColor.white, for: .normal)
+            resumeButton.layer.cornerRadius = 10
+            resumeButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
+
 
 //       
 //            
