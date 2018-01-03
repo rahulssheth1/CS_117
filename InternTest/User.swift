@@ -79,6 +79,6 @@ class User: NSObject {
     
     
     var domains = [String]()
-    
+    var matchedDomains = [String]()
 }
 

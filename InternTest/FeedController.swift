@@ -620,7 +620,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 if (topDict[topDict.index(topDict.startIndex, offsetBy: i)].value as? [String: AnyObject] != nil) {
                 let dictionary = topDict[topDict.index(topDict.startIndex, offsetBy: i)].value as! [String: AnyObject]
                     var userDomains = [String]()
-                   
+                    var matchedDomains = [String]()
                     if (dictionary["Domains"] as? [String: AnyObject] != nil)  {
                         let dictVal = dictionary["Domains"] as! [String: AnyObject]
                         let keys = dictVal.flatMap(){ $0.0 as? String }
@@ -730,6 +730,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             }
                             for curString in 0..<userDomains.count {
                                 if self.personalDomains.contains(userDomains[curString]) {
+                                    matchedDomains.append(userDomains[curString])
                                     checkBool = true
                                 }
                             }
@@ -741,6 +742,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             let user = User()
                             user.uid = topDict[topDict.index(topDict.startIndex, offsetBy: i)].key
                             user.domains = userDomains
+                            user.matchedDomains = matchedDomains
                             if (!keys.contains(user.uid)) {
                             if ((dictionary["name"] as? String) != nil) {
                                 user.name = (dictionary["name"] as? String)!
@@ -1324,7 +1326,11 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
             domainView1.layer.cornerRadius = 15
             domainView1.layer.masksToBounds = true
             
-            if (curUser.domains.count > 0) {
+            
+            if (curUser.matchedDomains.count > 0) {
+                domainLabel1.text = curUser.matchedDomains[0]
+            }
+            else if (curUser.domains.count > 0) {
             domainLabel1.text = curUser.domains[0]
             }
 //            domainLabel1.text = "Mobile App Development"
@@ -1344,7 +1350,10 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
             domainView2.layer.cornerRadius = 15
             domainView2.layer.masksToBounds = true
             
-            if (curUser.domains.count > 1) {
+            if (curUser.matchedDomains.count > 1) {
+                domainLabel2.text = curUser.matchedDomains[1]
+            }
+            else if (curUser.domains.count > 1) {
             domainLabel2.text = curUser.domains[1]
             }
             domainLabel2.translatesAutoresizingMaskIntoConstraints = false
@@ -1364,7 +1373,10 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
             domainView3.layer.cornerRadius = 15
             domainView3.layer.masksToBounds = true
             
-            if (curUser.domains.count > 2) {
+            if (curUser.matchedDomains.count > 2) {
+                domainLabel3.text = curUser.matchedDomains[2]
+            }
+            else if (curUser.domains.count > 2) {
             domainLabel3.text = curUser.domains[2]
             }
             domainLabel3.translatesAutoresizingMaskIntoConstraints = false
