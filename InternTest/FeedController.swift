@@ -6,6 +6,20 @@
 //  Copyright © 2017 Rahul Sheth. All rights reserved.
 //
 
+
+//Some information for the Domain Based feed Portion
+
+//1. This currently checks only if the user does not search and return to feed.
+//2. Currently, there is extra storage inside the Firebase database. The Root -> Domains is not utilized in this portion so as of Iteration V1.0 of Domain-Based Feed, it serves no purpose. However, it's still being saved because it may be useful and I'm too lazy to delete it
+//3. The workflow is that:
+    //a. We scan for all of the domains of the curUser and them into the array named personalDomains.
+    //b. Then we check to see if
+        //a. There is any overlap
+        //b. The personal Domains array is empty
+    //c. If either of the above conditions are true, we show the candidate/recruiter to the user
+//4. In addition, we present three of the domains the user is into. In addition, we prioritize the matched domains above general domains of the user.
+
+
 import Foundation
 import UIKit
 import AVKit
