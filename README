@@ -1,7 +1,13 @@
-Elevated Pitch: A new application that utilizes video resumes to better connect students with recruiters. 
+NXTPitch: A new application that utilizes video resumes to better connect students with recruiters. 
 
+1. Install the latest version of Cocoapods. 
 
-Dependencies:
+2. Clone the repo. 
 
-1. Most of the pods are installed but you have to install mailcore. It's already in the podfile so make the main directory 
-your working directory and type the command "pod install". This will install mailcore. This also means that you will have to have cocoaPods installed as well 
+3. Run 'pod install' in the cloned directory. This will install the frameworks required to run the application: 
+  a. Firebase: Handles all backend work. Uses Database and Authentication
+  b. GoogleAPIClientForRest and GoogleSignIn: Uses this for resume upload integration
+  c. Mailgun: Uses this to send verification emails to client email addresses. 
+  
+  
+4. Open up the new InternTest.xcworkspace file. Then click run in XCode. This will run the application on the Simulator or any iOS device.
