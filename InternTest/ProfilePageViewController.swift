@@ -683,6 +683,12 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         segueController.videoType = sender.tag
         present(segueController, animated: true, completion: nil)
     }
+    
+    func handleMoveToInterests() {
+        let segueController = AddDomainsViewController()
+        present(segueController, animated: true, completion: nil)
+        
+    }
 
     
     func generateRandomString(length: Int) -> String {
@@ -1262,7 +1268,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             resumeButton.translatesAutoresizingMaskIntoConstraints = false
             resumeButton.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
             resumeButton.widthAnchor.constraint(equalTo: changeButton.widthAnchor).isActive = true
-            resumeButton.topAnchor.constraint(equalTo: changeButton.bottomAnchor, constant: 50).isActive = true
+            resumeButton.topAnchor.constraint(equalTo: changeButton.bottomAnchor, constant: 30).isActive = true
             resumeButton.setTitle("See Resume", for: .normal)
             resumeButton.addTarget(self, action: #selector(handleMoveToResume), for: .touchUpInside)
             resumeButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
@@ -1270,27 +1276,21 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             resumeButton.layer.cornerRadius = 10
             resumeButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
 
+            let interestsButton = UIButton()
+            cell.addSubview(interestsButton)
+            interestsButton.translatesAutoresizingMaskIntoConstraints = false
+            interestsButton.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            interestsButton.widthAnchor.constraint(equalTo: changeButton.widthAnchor).isActive = true
+            interestsButton.topAnchor.constraint(equalTo: resumeButton.bottomAnchor, constant: 30).isActive = true
+            interestsButton.addTarget(self, action: #selector(handleMoveToInterests), for: .touchUpInside)
+            interestsButton.setTitle("Interested In?", for: .normal)
+            interestsButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+            interestsButton.setTitleColor(UIColor.white, for: .normal)
+            interestsButton.layer.cornerRadius = 10
+            interestsButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
 
-//       
-//            
-//            cell.addSubview(githubTap)
-//            githubTap.translatesAutoresizingMaskIntoConstraints = false
-//            githubTap.centerYAnchor.constraint(equalTo: githubImageView.centerYAnchor).isActive = true
-//            githubTap.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-//            githubTap.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 18)
-//            githubTap.setTitle("Click Me", for: .normal)
-//            githubTap.setTitleColor(UIColor.blue, for: .normal)
-//            githubTap.addTarget(self, action: #selector(handleURL), for: .touchUpInside)
-//
-//            cell.addSubview(bruinTap)
-//            bruinTap.translatesAutoresizingMaskIntoConstraints = false
-//            bruinTap.centerYAnchor.constraint(equalTo: bruinImageView.centerYAnchor).isActive = true
-//            bruinTap.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-//            bruinTap.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 18)!
-//            bruinTap.setTitle("Click Me", for: .normal)
-//            bruinTap.setTitleColor(UIColor.blue, for: .normal)
-//            bruinTap.addTarget(self, action: #selector(handleURL), for: .touchUpInside)
-//
+            
+
             
         default:
             
@@ -1355,27 +1355,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
                     ai.startAnimating()
                 }
                 
-//                let updateProfileButton = UIButton()
-//                cell.addSubview(updateProfileButton)
-//                updateProfileButton.translatesAutoresizingMaskIntoConstraints = false
-//                updateProfileButton.topAnchor.constraint(equalTo: cell.topAnchor, constant: 5).isActive = true
-//                updateProfileButton.rightAnchor.constraint(equalTo: cell.rightAnchor, constant: -5).isActive = true
-//                updateProfileButton.setTitle("Update", for: .normal)
-//                updateProfileButton.setTitleColor(UIColor.blue, for: .normal)
-//                updateProfileButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
-//                updateProfileButton.heightAnchor.constraint(equalToConstant: 10).isActive = true
-//                updateProfileButton.addTarget(self, action: #selector(moveToBio), for: .touchUpInside)
-////                
-//                cell.addSubview(fullLabel)
-//                fullLabel.translatesAutoresizingMaskIntoConstraints = false
-//                fullLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor).isActive = true
-//                fullLabel.widthAnchor.constraint(equalToConstant: cell.bounds.width * 0.6).isActive = true
-//                fullLabel.leftAnchor.constraint(equalTo: profileImageView.rightAnchor, constant: 15).isActive = true
-//                fullLabel.heightAnchor.constraint(equalTo: profileImageView.heightAnchor).isActive = true
-//                fullLabel.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 12)
-//                
-//                fullLabel.lineBreakMode = .byWordWrapping
-//                fullLabel.numberOfLines = 0
+
                 break
                 
                 
@@ -1538,6 +1518,20 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
                 companySite.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 16)
                 companySite.addTarget(self, action: #selector(handleURL), for: .touchUpInside)
                 break
+            case 8:
+                let interestsButton = UIButton()
+                cell.addSubview(interestsButton)
+                interestsButton.translatesAutoresizingMaskIntoConstraints = false
+                interestsButton.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+                interestsButton.widthAnchor.constraint(equalToConstant: cell.bounds.width * 0.5).isActive = true
+                interestsButton.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+                interestsButton.addTarget(self, action: #selector(handleMoveToInterests), for: .touchUpInside)
+                interestsButton.setTitle("Interested In?", for: .normal)
+                interestsButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+                interestsButton.setTitleColor(UIColor.white, for: .normal)
+                interestsButton.layer.cornerRadius = 10
+                interestsButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
+
             default:
                 break
                 
@@ -1551,7 +1545,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         if (globalFeedString == "Employer") {
         return 7
         } else {
-            return 8
+            return 9
         }
         
     }

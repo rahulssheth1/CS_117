@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 47;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -61,6 +61,7 @@
 		B7D4801B1F1F40080080E8C2 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D4801A1F1F40080080E8C2 /* TodoItem.swift */; };
 		B7D4801D1F1F40120080E8C2 /* TodoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D4801C1F1F40120080E8C2 /* TodoList.swift */; };
 		B7D541331ED0E0ED006282DF /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D541321ED0E0ED006282DF /* Extensions.swift */; };
+		B7E323091FFB034F004B0D46 /* AddDomainsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E323081FFB034F004B0D46 /* AddDomainsViewController.swift */; };
 		B7E3B2F11F74661C008320C8 /* StudentLinksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E3B2F01F74661C008320C8 /* StudentLinksViewController.swift */; };
 		B7E3B2F31F749ADE008320C8 /* EditPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7E3B2F21F749ADE008320C8 /* EditPositionViewController.swift */; };
 		B7EEB1331F42627F00F101C6 /* SetBioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7EEB1321F42627F00F101C6 /* SetBioViewController.swift */; };
@@ -152,6 +153,7 @@
 		B7D4801A1F1F40080080E8C2 /* TodoItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		B7D4801C1F1F40120080E8C2 /* TodoList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoList.swift; sourceTree = "<group>"; };
 		B7D541321ED0E0ED006282DF /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B7E323081FFB034F004B0D46 /* AddDomainsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDomainsViewController.swift; sourceTree = "<group>"; };
 		B7E3B2F01F74661C008320C8 /* StudentLinksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentLinksViewController.swift; sourceTree = "<group>"; };
 		B7E3B2F21F749ADE008320C8 /* EditPositionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPositionViewController.swift; sourceTree = "<group>"; };
 		B7EB8CF81F220532006611B8 /* InternTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InternTest.entitlements; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				B7AE89381F2BC15300914699 /* ForgotPasswordLandingViewController.swift */,
 				B7C658D81E8EEB1A0081B06E /* SetPositionViewController.swift */,
 				B7097D921E108AEC00CA1C56 /* ProfilePageViewController.swift */,
+				B7E323081FFB034F004B0D46 /* AddDomainsViewController.swift */,
 				B7BC83C41FEDF32500331CBC /* ResumeViewController.swift */,
 				B7BC83C61FEF185C00331CBC /* GoogleUploadVC.swift */,
 				B7E3B2F21F749ADE008320C8 /* EditPositionViewController.swift */,
@@ -487,7 +490,7 @@
 				};
 			};
 			buildConfigurationList = B728341E1E0B125D007CD400 /* Build configuration list for PBXProject "InternTest" */;
-			compatibilityVersion = "Xcode 6.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -692,6 +695,7 @@
 				B72834271E0B125D007CD400 /* AppDelegate.swift in Sources */,
 				B732FAA41E2CD480005514CE /* FeedController.swift in Sources */,
 				B7A2C3551F6FD80700A550C6 /* EditTimeViewController.swift in Sources */,
+				B7E323091FFB034F004B0D46 /* AddDomainsViewController.swift in Sources */,
 				B7D480151F173D9D0080E8C2 /* Reminder.swift in Sources */,
 				B76AF1F61F2AF52C00E69252 /* FeedTableViewCell.swift in Sources */,
 				B7E3B2F11F74661C008320C8 /* StudentLinksViewController.swift in Sources */,
@@ -895,6 +899,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "InternTest-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "Pods/**";
 			};
 			name = Debug;
@@ -915,6 +920,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "InternTest-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				"USER_HEADER_SEARCH_PATHS[arch=*]" = "Pods/**";
 			};
 			name = Release;

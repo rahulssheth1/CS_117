@@ -76,5 +76,9 @@ class User: NSObject {
         }
         
     }
+    
+    
+    var domains = [String]()
+    
 }
 

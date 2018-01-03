@@ -26,6 +26,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     
     //Initialization of variables
+    var personalDomains = [String]()
     let uid = FIRAuth.auth()?.currentUser?.uid
     var tableView = UITableView()
   var ref = FIRDatabase.database().reference()
@@ -40,6 +41,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var refreshControl: UIRefreshControl!
     var searchBool: Bool?
     var previousController: UIViewController?
+    let blueSearchBarColor = UIColor(red: 21/255, green: 126/255, blue: 251/255, alpha: 0.75)
 
     var helpView = UIView()
     var helpLabel = UILabel()
@@ -595,6 +597,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         ref.child("users").observe(.value, with: {  (snapshot) in
             if (snapshot.value as? [String: AnyObject]  != nil) {
             let topDict = snapshot.value as! [String: AnyObject]
+                
                 let dict2 = topDict[self.uid!]
             if (dict2?["Archived"] as? [String: AnyObject] != nil) {
                     dict3 = dict2?["Archived"] as! [String: AnyObject]
@@ -605,16 +608,26 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
                    
                     
                 }
+                if (dict2!["Domains"] as? [String: AnyObject] != nil) {
+                    let dict4 = dict2!["Domains"] as! [String: AnyObject]
+                    let keyVals = dict4.flatMap(){ $0.0 as? String}
+                    
+                    self.personalDomains = keyVals
+                }
 
             
             for i in 0..<topDict.count {
                 if (topDict[topDict.index(topDict.startIndex, offsetBy: i)].value as? [String: AnyObject] != nil) {
                 let dictionary = topDict[topDict.index(topDict.startIndex, offsetBy: i)].value as! [String: AnyObject]
-                
+                    var userDomains = [String]()
+                   
+                    if (dictionary["Domains"] as? [String: AnyObject] != nil)  {
+                        let dictVal = dictionary["Domains"] as! [String: AnyObject]
+                        let keys = dictVal.flatMap(){ $0.0 as? String }
+                        userDomains = keys
+                    }
                     if ((dictionary["Occupation"] as? String) != globalFeedString) {
                         recruiterOrAll = false
-                        print("Error message here", dictionary["Occupation"] as? String)
-                        print(globalFeedString, "This is the String")
                     } else {
                         recruiterOrAll = true
                     }
@@ -711,14 +724,23 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             }
                             
                         default:
-                            checkBool = true
+                            checkBool = false
+                            if (self.personalDomains.count == 0) {
+                                checkBool = true
+                            }
+                            for curString in 0..<userDomains.count {
+                                if self.personalDomains.contains(userDomains[curString]) {
+                                    checkBool = true
+                                }
+                            }
+                            
                             break
                             
                         }
                         if (checkBool) {
                             let user = User()
                             user.uid = topDict[topDict.index(topDict.startIndex, offsetBy: i)].key
-                            
+                            user.domains = userDomains
                             if (!keys.contains(user.uid)) {
                             if ((dictionary["name"] as? String) != nil) {
                                 user.name = (dictionary["name"] as? String)!
@@ -789,7 +811,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
-        titleLabel.text = "Elevated Pitch"
+        titleLabel.text = "NXTPitch"
         titleLabel.textColor = UIColor.white
         titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -932,7 +954,6 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         ref.child("users").child(uid!).observeSingleEvent(of: .value, with:
             { (snapshot) in
-                print(snapshot.value as? [String: AnyObject])
                 if let dictionary = snapshot.value as? [String: AnyObject]  {
                     if (dictionary["name"] as? String != nil) {
                     globalCurrentName = (dictionary["name"] as? String)!
@@ -1120,7 +1141,6 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = FeedTableViewCell(style: .subtitle, reuseIdentifier: cellID)
-        print(userList.count, "This is the count")
         
         if (userList.count == 0) {
             tableView.backgroundColor = UIColor.lightGray
@@ -1175,7 +1195,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cellImageView.layer.cornerRadius = 17.5
         cellImageView.layer.masksToBounds = true
         cellNoButton.value = indexPath.row
-        cellNoButton.userID = userList[indexPath.row].uid
+        cellNoButton.userID = curUser.uid
         cellNoButton.setBackgroundImage(UIImage(named: "RedCross"), for: .normal)
         cellNoButton.addTarget(self, action: #selector(handleNoButton), for: .touchUpInside)
         cellNoButton.translatesAutoresizingMaskIntoConstraints = false
@@ -1190,7 +1210,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cellNoButton.backgroundColor = UIColor.white
         cellNoButton.setTitleColor(UIColor.black, for: .normal)
         
-        cellCheckButton.user = userList[indexPath.row]
+        cellCheckButton.user = curUser
         
         cellCheckButton.translatesAutoresizingMaskIntoConstraints = false
         cellCheckButton.setBackgroundImage(UIImage(named: "playIcon"), for: .normal)
@@ -1211,7 +1231,7 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cellButton.heightAnchor.constraint(equalTo: cellNoButton.heightAnchor, constant: 1.2).isActive = true
         cellButton.rightAnchor.constraint(equalTo: cell.rightAnchor, constant: -1 * width / 6 ).isActive = true
         cellButton.isUserInteractionEnabled = true
-        cellButton.user = userList[indexPath.row]
+        cellButton.user = curUser
         cellButton.addTarget(self, action: #selector(handleYesButton), for: .touchUpInside)
         cellButton.widthAnchor.constraint(equalTo: cellNoButton.widthAnchor).isActive = true
         
@@ -1242,12 +1262,12 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cellLabelOccupy = GenericCellButton()
         cell.addSubview(cellLabelOccupy)
         cellLabelOccupy.translatesAutoresizingMaskIntoConstraints = false
-        cellLabelOccupy.setTitle(userList[indexPath.row].companyLabel, for: .normal)
+        cellLabelOccupy.setTitle(curUser.companyLabel, for: .normal)
         cellLabelOccupy.leftAnchor.constraint(equalTo: cellImageView.rightAnchor, constant: 5).isActive = true
         cellLabelOccupy.bottomAnchor.constraint(equalTo: cellImageView.bottomAnchor, constant: 10).isActive = true
         cellLabelOccupy.setTitleColor(UIColor.black, for: .normal)
         cellLabelOccupy.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Regular", size: 20)
-        cellLabelOccupy.user = userList[indexPath.row]
+        cellLabelOccupy.user = curUser
         cellLabelOccupy.addTarget(self, action: #selector(handleSearchForOccupation), for: .touchUpInside)
         
         cellLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -1256,12 +1276,13 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cellLabel.bottomAnchor.constraint(equalTo: cellImageView.topAnchor, constant: 20).isActive = true
         
        
-        cellLabel.setTitle(userList[indexPath.row].name, for: .normal)
+        cellLabel.setTitle(curUser.name, for: .normal)
         cellLabel.setTitleColor(UIColor.black, for: .normal)
         cellLabel.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
 
-        cellLabel.user = userList[indexPath.row]
+        cellLabel.user = curUser
         cellLabel.addTarget(self, action: #selector(handleScreenshot), for: .touchUpInside)
+        
         
         
         let messageButton = GenericCellButton()
@@ -1276,6 +1297,85 @@ class FeedController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if (globalFeedString == "Employer") {
             messageButton.isHidden = true
         }
+        
+            
+        let domainView1 = UIView()
+        let domainView2 = UIView()
+        let domainView3 = UIView()
+        let domainLabel1 = UILabel()
+        let domainLabel2 = UILabel()
+        let domainLabel3 = UILabel()
+        
+        cell.addSubview(domainView1)
+        cell.addSubview(domainView2)
+        cell.addSubview(domainView3)
+            
+        domainView1.addSubview(domainLabel1)
+        domainView2.addSubview(domainLabel2)
+        domainView3.addSubview(domainLabel3)
+            
+            domainView1.translatesAutoresizingMaskIntoConstraints = false
+            
+            domainView1.leftAnchor.constraint(equalTo: cellImageView.leftAnchor).isActive = true
+            domainView1.topAnchor.constraint(equalTo: (cell.object?.imageView?.bottomAnchor)!, constant: 10).isActive = true
+            domainView1.rightAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            domainView1.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            domainView1.backgroundColor = blueSearchBarColor
+            domainView1.layer.cornerRadius = 15
+            domainView1.layer.masksToBounds = true
+            
+            if (curUser.domains.count > 0) {
+            domainLabel1.text = curUser.domains[0]
+            }
+//            domainLabel1.text = "Mobile App Development"
+            domainLabel1.textColor = UIColor.white
+            domainLabel1.translatesAutoresizingMaskIntoConstraints = false
+            domainLabel1.centerXAnchor.constraint(equalTo: domainView1.centerXAnchor).isActive = true
+            domainLabel1.centerYAnchor.constraint(equalTo: domainView1.centerYAnchor).isActive = true
+            domainLabel1.widthAnchor.constraint(equalTo: domainView1.widthAnchor, multiplier: 0.9).isActive = true
+            domainLabel1.heightAnchor.constraint(equalTo: domainView1.heightAnchor, multiplier: 0.9).isActive = true
+            
+            domainView2.translatesAutoresizingMaskIntoConstraints = false
+            domainView2.topAnchor.constraint(equalTo: domainView1.bottomAnchor, constant: 10).isActive = true
+            domainView2.leftAnchor.constraint(equalTo: domainView1.leftAnchor).isActive = true
+            domainView2.rightAnchor.constraint(equalTo: domainView1.rightAnchor).isActive = true
+            domainView2.heightAnchor.constraint(equalTo: domainView1.heightAnchor).isActive = true
+            domainView2.backgroundColor = blueSearchBarColor
+            domainView2.layer.cornerRadius = 15
+            domainView2.layer.masksToBounds = true
+            
+            if (curUser.domains.count > 1) {
+            domainLabel2.text = curUser.domains[1]
+            }
+            domainLabel2.translatesAutoresizingMaskIntoConstraints = false
+            domainLabel2.textColor = UIColor.white
+            domainLabel2.centerYAnchor.constraint(equalTo: domainView2.centerYAnchor).isActive = true
+            domainLabel2.centerXAnchor.constraint(equalTo: domainView2.centerXAnchor).isActive = true
+            domainLabel2.widthAnchor.constraint(equalTo: domainView2.widthAnchor, multiplier: 0.9).isActive = true
+            domainLabel2.heightAnchor.constraint(equalTo: domainView2.heightAnchor, multiplier: 0.9).isActive = true
+            
+            
+            domainView3.translatesAutoresizingMaskIntoConstraints = false
+            domainView3.topAnchor.constraint(equalTo: domainView2.bottomAnchor, constant: 10).isActive = true
+            domainView3.leftAnchor.constraint(equalTo: domainView1.leftAnchor).isActive = true
+            domainView3.rightAnchor.constraint(equalTo: domainView1.rightAnchor).isActive = true
+            domainView3.heightAnchor.constraint(equalTo: domainView1.heightAnchor).isActive = true
+            domainView3.backgroundColor = blueSearchBarColor
+            domainView3.layer.cornerRadius = 15
+            domainView3.layer.masksToBounds = true
+            
+            if (curUser.domains.count > 2) {
+            domainLabel3.text = curUser.domains[2]
+            }
+            domainLabel3.translatesAutoresizingMaskIntoConstraints = false
+            domainLabel3.textColor = UIColor.white
+            domainLabel3.centerYAnchor.constraint(equalTo: domainView3.centerYAnchor).isActive = true
+            domainLabel3.centerXAnchor.constraint(equalTo: domainView3.centerXAnchor).isActive = true
+            domainLabel3.widthAnchor.constraint(equalTo: domainView3.widthAnchor, multiplier: 0.9).isActive = true
+            domainLabel3.heightAnchor.constraint(equalTo: domainView3.heightAnchor, multiplier: 0.9).isActive = true
+            
+            
+            
         
         }
        
