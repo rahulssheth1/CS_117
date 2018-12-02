@@ -14,7 +14,7 @@ import mailgun
 //This is where Employers choose their Occupation
 class SetEmailViewController: UIViewController {
     
-    
+    var typeVal = Int()
     let emailTF = UITextField()
     var curUser = SignUpUser()
     //HELPER FUNCTIONS AND VIEW DID LOAD
@@ -47,11 +47,12 @@ class SetEmailViewController: UIViewController {
     }
     
     
-    func handleMoveToRecruiterVal() {
+    func handleMoveToRecruiterPass() {
         
-        let segueController = VerificationCodeViewController()
+        let segueController = SetPasswordViewController()
+        curUser.email = emailTF.text!
         segueController.curUser = curUser
-        segueController.typeInt = 1
+        segueController.isRecruiter = 1 
         present(segueController, animated: true, completion: nil)
 
     }
@@ -184,8 +185,14 @@ class SetEmailViewController: UIViewController {
         continueButton.setTitleColor(UIColor.white, for: .normal)
         continueButton.layer.cornerRadius = 10
         continueButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
-        continueButton.addTarget(self, action: #selector(handleMoveToStudentVal), for: .touchUpInside)
-     
+
+        if (self.typeVal == 1) {
+            continueButton.addTarget(self, action: #selector(handleMoveToRecruiterPass), for: .touchUpInside)
+
+        } else {
+            continueButton.addTarget(self, action: #selector(handleMoveToStudentVal), for: .touchUpInside)
+
+        }
     
     }
 

@@ -557,7 +557,7 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
-        titleLabel.text = "Elevated Pitch"
+        titleLabel.text = "NXTPitch"
         titleLabel.textColor = UIColor.white
         titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -890,17 +890,31 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
             firstVideoLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
             firstVideoLabel.topAnchor.constraint(equalTo: cell.topAnchor, constant: 10).isActive = true
             
-            
+            let backView1 = UIView()
+            cell.addSubview(backView1)
+            backView1.translatesAutoresizingMaskIntoConstraints = false
+            backView1.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            backView1.heightAnchor.constraint(equalToConstant: height).isActive = true
+            backView1.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+            backView1.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            backView1.backgroundColor = UIColor.black
             
             cell.addSubview(firstVideoImageView)
             firstVideoImageView.translatesAutoresizingMaskIntoConstraints = false
             firstVideoImageView.heightAnchor.constraint(equalToConstant: height).isActive = true
             firstVideoImageView.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-            firstVideoImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
             firstVideoImageView.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
             firstVideoImageView.layer.borderWidth = 0.5
             firstVideoImageView.isUserInteractionEnabled = true
-            
+            if (firstVideoImageView.image?.size.height != nil && firstVideoImageView.image?.size.width != nil) {
+                if (firstVideoImageView.image?.size.height.isLess(than: (firstVideoImageView.image?.size.width)!))! {
+                    firstVideoImageView.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                } else {
+                    firstVideoImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3 ).isActive = true
+                }
+            } else {
+                firstVideoImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width / 2).isActive = true
+            }
            
             if (firstVideoURl == "AddIcon") {
                 firstVideoImageView.image = UIImage(named: "VideoUnavailable")
@@ -947,13 +961,40 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
                 supplementalPlayButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
                 
             }
+            let backView2 = UIView()
+            cell.addSubview(backView2)
+            backView2.translatesAutoresizingMaskIntoConstraints = false
+            backView2.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            backView2.heightAnchor.constraint(equalToConstant: height).isActive = true
+            backView2.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            backView2.topAnchor.constraint(equalTo: supplementalVideoLabel.bottomAnchor, constant: 75).isActive = true
+            backView2.backgroundColor = UIColor.black
+            
             supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
             supplementalImageView.heightAnchor.constraint(equalToConstant: height).isActive = true
             supplementalImageView.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-            supplementalImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
             supplementalImageView.topAnchor.constraint(equalTo: supplementalVideoLabel.bottomAnchor, constant: 75).isActive = true
             supplementalImageView.layer.borderWidth = 0.5
             supplementalImageView.isUserInteractionEnabled = true
+            if (supplementalImageView.image?.size.height != nil && supplementalImageView.image?.size.width != nil) {
+                if (supplementalImageView.image?.size.height.isLess(than: (supplementalImageView.image?.size.width)!))! {
+                    supplementalImageView.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                } else {
+                    supplementalImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3 ).isActive = true
+                }
+            } else {
+                supplementalImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3).isActive = true
+            }
+            let backView3 = UIView()
+            cell.addSubview(backView3)
+            backView3.translatesAutoresizingMaskIntoConstraints = false
+            backView3.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            backView3.heightAnchor.constraint(equalToConstant: height).isActive = true
+            backView3.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+
+            backView3.topAnchor.constraint(equalTo: supplementalImageView.bottomAnchor, constant: 75).isActive = true
+            backView3.backgroundColor = UIColor.black
+            
             
             cell.addSubview(supplementalImageView2)
             var supplementalPlayButton2 = playButton()
@@ -973,13 +1014,28 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
             supplementalImageView2.translatesAutoresizingMaskIntoConstraints = false
             supplementalImageView2.heightAnchor.constraint(equalToConstant: height).isActive = true
             supplementalImageView2.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-            supplementalImageView2.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
             supplementalImageView2.topAnchor.constraint(equalTo: supplementalImageView.bottomAnchor, constant: 75).isActive = true
             supplementalImageView2.layer.borderWidth = 0.5
             supplementalImageView2.isUserInteractionEnabled = true
+            if (supplementalImageView2.image?.size.height != nil && supplementalImageView2.image?.size.width != nil) {
+                if (supplementalImageView2.image?.size.height.isLess(than: (supplementalImageView2.image?.size.width)!))! {
+                    supplementalImageView2.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                } else {
+                    supplementalImageView2.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3 ).isActive = true
+                }
+            } else {
+                supplementalImageView2.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3).isActive = true
+            }
             
             
-            
+            let backView4 = UIView()
+            cell.addSubview(backView4)
+            backView4.translatesAutoresizingMaskIntoConstraints = false
+            backView4.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            backView4.heightAnchor.constraint(equalToConstant: height).isActive = true
+            backView4.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            backView4.topAnchor.constraint(equalTo: supplementalImageView2.bottomAnchor, constant: 75).isActive = true
+            backView4.backgroundColor = UIColor.black
             
             cell.addSubview(supplementalImageView3)
             var supplementalPlayButton3 = playButton()
@@ -1001,10 +1057,18 @@ class StudentViewController: UIViewController, UITableViewDelegate, UITableViewD
             supplementalImageView3.translatesAutoresizingMaskIntoConstraints = false
             supplementalImageView3.heightAnchor.constraint(equalToConstant: height).isActive = true
             supplementalImageView3.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-            supplementalImageView3.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
             supplementalImageView3.topAnchor.constraint(equalTo: supplementalImageView2.bottomAnchor, constant: 75).isActive = true
             supplementalImageView3.layer.borderWidth = 0.5
             supplementalImageView3.isUserInteractionEnabled = true
+            if (supplementalImageView3.image?.size.height != nil && supplementalImageView3.image?.size.width != nil) {
+                if (supplementalImageView3.image?.size.height.isLess(than: (supplementalImageView3.image?.size.width)!))! {
+                    supplementalImageView3.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                } else {
+                    supplementalImageView3.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3 ).isActive = true
+                }
+            } else {
+                supplementalImageView3.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            }
             
             
             

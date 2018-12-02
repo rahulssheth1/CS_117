@@ -33,7 +33,7 @@ class TodoList {
         if #available(iOS 10.0, *) {
             let content = UNMutableNotificationContent()
             content.title = "Student Alert"
-            content.subtitle = "From Elevated Pitch"
+            content.subtitle = "From NXTPitch"
             content.body = item.UUID
             content.body.append(" is free now")
             content.badge = 1

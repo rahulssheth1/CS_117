@@ -20,33 +20,40 @@ class SetReminderViewController2: UIViewController {
     
     
     func changeDate() {
-        
-        
         let myCalendar = NSCalendar(calendarIdentifier: NSCalendar.Identifier(rawValue: NSGregorianCalendar))
         let unitFlags: NSCalendar.Unit = [.hour, .minute]
         let myComponents = myCalendar?.components(unitFlags, from: startTime!)
         let myComponents2 = myCalendar?.components(unitFlags , from: timePicker.date)
-        
-        
-        let hour1 = myComponents?.hour
-        let minute1 = myComponents?.minute
-        let hour2 = myComponents2?.hour
-        let minute2 = myComponents2?.minute
-        let uid = FIRAuth.auth()?.currentUser?.uid
-        let ref = FIRDatabase.database().reference().child("users").child(uid!).child("Personal Reminders").childByAutoId()
-        let startHour = NSNumber(value: hour1!)
-        let startMinute = NSNumber(value: minute1!)
-        let endHour = NSNumber(value: hour2!)
-        let endMinute = NSNumber(value: minute2!)
-        
-        let dayString = startDay
-        
-        let values = ["StartHour": startHour, "StartMinute": startMinute, "EndHour": endHour, "EndMinute": endMinute, "Day": NSString(string: dayString!)]
-        ref.setValue(values)
-        
-        
-        let segueController = SetUpFreeTimeViewController()
-        present(segueController, animated: true, completion: nil)
+                let hour1 = myComponents?.hour
+                let minute1 = myComponents?.minute
+                let hour2 = myComponents2?.hour
+                let minute2 = myComponents2?.minute
+
+                let segueController = FriendsViewController()
+        segueController.startHour = hour1
+        segueController.startMinute = minute1
+        segueController.endHour = hour2
+        segueController.endMinute = minute2
+        segueController.startDay = self.startDay
+                present(segueController, animated: true, completion: nil)
+//
+//
+
+//        let uid = FIRAuth.auth()?.currentUser?.uid
+//        let ref = FIRDatabase.database().reference().child("users").child(uid!).child("Personal Reminders").childByAutoId()
+//        let startHour = NSNumber(value: hour1!)
+//        let startMinute = NSNumber(value: minute1!)
+//        let endHour = NSNumber(value: hour2!)
+//        let endMinute = NSNumber(value: minute2!)
+//
+//        let dayString = startDay
+//
+//        let values = ["StartHour": startHour, "StartMinute": startMinute, "EndHour": endHour, "EndMinute": endMinute, "Day": NSString(string: dayString!)]
+//        ref.setValue(values)
+//
+//
+//        let segueController = SetUpFreeTimeViewController()
+//        present(segueController, animated: true, completion: nil)
     }
     
     func handleBackMove() {

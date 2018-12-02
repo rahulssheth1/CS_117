@@ -97,7 +97,7 @@ class StudentLinksViewController: UIViewController, UITableViewDelegate, UITable
         topView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
-        titleLabel.text = "Elevated Pitch"
+        titleLabel.text = "NXTPitch"
         titleLabel.textColor = UIColor.white
         titleLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true

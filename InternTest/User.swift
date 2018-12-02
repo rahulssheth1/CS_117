@@ -26,6 +26,9 @@ class User: NSObject {
     var image: UIImage? = nil
     var lastMessage: String = ""
     var profileImageURL: String = ""
+    var logoImageURL: String = ""
+    var companyDesc: String = "" 
+
     var videoURL: String = ""
     lazy var imageView: UIImageView? = {
         let imageViewer = UIImageView()

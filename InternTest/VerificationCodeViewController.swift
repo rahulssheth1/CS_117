@@ -89,7 +89,7 @@ class VerificationCodeViewController: UIViewController {
 //    
 //    var builder = MCOMessageBuilder()
 //    builder.header.to = [MCOAddress(displayName: curUser.name, mailbox: curUser.email)]
-//    builder.header.from = MCOAddress(displayName: "Elevated Pitch", mailbox: "elevatedpitchhelp@gmail.com")
+//    builder.header.from = MCOAddress(displayName: "NXTPitch", mailbox: "elevatedpitchhelp@gmail.com")
 //    builder.header.subject = "Invitation to Elevated Pitch"
 //    builder.htmlBody = "Welcome to Elevated Pitch! Use "
 //    builder.htmlBody.append(passwordString)
@@ -115,6 +115,7 @@ class VerificationCodeViewController: UIViewController {
         if (firstNameTF.text?.lowercased() == curUser.verificationCode.lowercased()) {
         let segueController = SetPasswordViewController()
             segueController.curUser = self.curUser
+            segueController.isRecruiter = 0
             firstNameTF.text = ""
         present(segueController, animated: true, completion: nil)
         } else {

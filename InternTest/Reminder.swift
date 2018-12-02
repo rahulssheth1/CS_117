@@ -23,7 +23,7 @@ class Reminder: NSObject {
     var timeString1: String = ""
     var timeString2: String = ""
     var id: String = ""
-    
+    var list = [User]()
     
     
     

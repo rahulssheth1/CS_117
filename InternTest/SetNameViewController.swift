@@ -51,8 +51,10 @@ class SetNameViewController: UIViewController {
 
         } else {
         signUpUser.name = firstNameTF.text!
+        signUpUser.name.append(" ")
         signUpUser.name.append(lastNameTF.text!)
         let segueController = SetEmailViewController()
+        segueController.typeVal = 0
         segueController.curUser = signUpUser
             firstNameTF.text = ""
             lastNameTF.text = ""
@@ -64,15 +66,23 @@ class SetNameViewController: UIViewController {
     
     func handleMoveToRecruiterVal() {
         
-        let segueController = VerificationCodeViewController()
+        let segueController = SetEmailViewController()
         curUser.previousController = "SetNameViewController"
-        
+        if (firstNameTF.text == "" || lastNameTF.text == "") {
+            let alert = UIAlertController(title: "Failure", message: "Please enter a name", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
+        } else {
+        curUser.name = firstNameTF.text!
+        curUser.name.append(" ")
+        curUser.name.append(lastNameTF.text!)
         segueController.curUser = curUser
-        segueController.typeInt = 1
+        segueController.typeVal = 1
         firstNameTF.text = ""
         lastNameTF.text = ""
         present(segueController, animated: true, completion: nil)
-        
+        }
     }
     class linkButton: UIButton {
         var linkURL = String()
@@ -209,7 +219,7 @@ class SetNameViewController: UIViewController {
         signUpButton.widthAnchor.constraint(equalToConstant: self.view.bounds.width * 0.65).isActive = true
         signUpButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         signUpButton.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.05).isActive = true
-        signUpButton.setTitle("Sign Up", for: .normal)
+        signUpButton.setTitle("Continue (Student)", for: .normal)
         signUpButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
         signUpButton.setTitleColor(UIColor.white, for: .normal)
         signUpButton.layer.cornerRadius = 10
@@ -217,25 +227,21 @@ class SetNameViewController: UIViewController {
         signUpButton.topAnchor.constraint(equalTo: andLabel.bottomAnchor, constant: self.view.bounds.height * 0.02).isActive = true
         signUpButton.addTarget(self, action: #selector(handleMoveToEmail), for: .touchUpInside)
         
-        
-        let disclaimerLabel3 = UILabel()
-        self.view.addSubview(disclaimerLabel3)
-        disclaimerLabel3.translatesAutoresizingMaskIntoConstraints = false
-        disclaimerLabel3.text = "Are you a recruiter?"
-        disclaimerLabel3.topAnchor.constraint(equalTo: signUpButton.bottomAnchor).isActive = true
-        disclaimerLabel3.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        disclaimerLabel3.heightAnchor.constraint(equalTo: firstNameTF.heightAnchor).isActive = true
-        disclaimerLabel3.font = UIFont(name: "AppleSDGothicNeo-Regular" , size: 15)
-        
         let recruiterButton = UIButton()
         self.view.addSubview(recruiterButton)
         recruiterButton.translatesAutoresizingMaskIntoConstraints = false
-        recruiterButton.topAnchor.constraint(equalTo: disclaimerLabel3.bottomAnchor).isActive = true
-        recruiterButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        recruiterButton.setTitle(" Click here", for: .normal)
+        recruiterButton.widthAnchor.constraint(equalToConstant: self.view.bounds.width * 0.65).isActive = true
+        recruiterButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        recruiterButton.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.05).isActive = true
+        recruiterButton.setTitle("Continue (Recruiter)", for: .normal)
+        recruiterButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+        recruiterButton.setTitleColor(UIColor.white, for: .normal)
+        recruiterButton.layer.cornerRadius = 10
+        recruiterButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
+        recruiterButton.topAnchor.constraint(equalTo: signUpButton.bottomAnchor, constant: self.view.bounds.height * 0.02).isActive = true
         recruiterButton.addTarget(self, action: #selector(handleMoveToRecruiterVal), for: .touchUpInside)
-        recruiterButton.setTitleColor(UIColor(red: 100/255, green: 149/255, blue: 245/255, alpha: 1), for: .normal)
-        recruiterButton.titleLabel?.font =  UIFont(name: "AppleSDGothicNeo-Bold" , size: 15)
+        
+       
 
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")

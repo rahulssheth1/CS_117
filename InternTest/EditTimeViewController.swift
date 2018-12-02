@@ -10,13 +10,14 @@ import UIKit
 import Firebase
 
 class EditTimeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource {
-
-    
+   
+    var tableView = UITableView()
+    var bottomTableView = UITableView()
     let titleLabel = UILabel()
     var reminder = Reminder()
     let cell2 = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID2")
     let cell3 = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID3")
-
+    
     var dayPicker = UIPickerView()
     var timePicker = UIDatePicker()
     var timePicker2 = UIDatePicker()
@@ -181,22 +182,30 @@ class EditTimeViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (tableView == self.tableView) {
         switch indexPath.row {
         case 4, 7:
             return 200
         default:
             return 50
         }
+        } else {
+            return 50
+        }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (tableView == self.tableView) {
         return 9
+        } else {
+            return reminder.list.count + 1
+        }
         
     }
     
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        if (tableView == self.tableView) {
         switch indexPath.row {
         case 0, 2, 5, 8:
             let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID")
@@ -321,18 +330,65 @@ class EditTimeViewController: UIViewController, UITableViewDelegate, UITableView
             cell.backgroundColor = UIColor.clear
             return cell
         }
+        } else {
+            if (indexPath.row == 0) {
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID")
+                let messagesLabel = UILabel()
+                cell.addSubview(messagesLabel)
+                messagesLabel.translatesAutoresizingMaskIntoConstraints = false
+                messagesLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+                messagesLabel.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+                messagesLabel.text = "Invited People!"
+                messagesLabel.font = UIFont(name: "AppleSDGothicNeo", size: 20)
+                cell.selectionStyle = .none
+                return cell
+            } else {
+                let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "CellID")
+                let cellLabel = UILabel()
+                let cellImageView = UIImageView()
+                cell.selectionStyle = .none
+                
+                cell.addSubview(cellLabel)
+                cell.addSubview(cellImageView)
+                
+                //This is the profilePicture image view
+                var list = [User]()
+                list = reminder.list
+                if (list.count != 0 || indexPath.row > list.count) {
+                    
+                    
+                    cellImageView.translatesAutoresizingMaskIntoConstraints = false
+                    cellImageView.centerXAnchor.constraint(equalTo: cell.leftAnchor, constant: 40).isActive = true
+                    cellImageView.widthAnchor.constraint(equalToConstant: 40).isActive = true
+                    cellImageView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+                    cellImageView.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+                    cellImageView.image = list[indexPath.row - 1].imageView?.image
+                    cellImageView.layer.cornerRadius = 20
+                    cellImageView.layer.masksToBounds = true
+                    
+                    //This is the name of the user
+                    
+                    cellLabel.text = list[indexPath.row - 1].name
+                    cellLabel.translatesAutoresizingMaskIntoConstraints = false
+                    cellLabel.topAnchor.constraint(equalTo: cellImageView.topAnchor).isActive = true
+                    cellLabel.leftAnchor.constraint(equalTo: cellImageView.rightAnchor, constant: 10).isActive = true
+                    cellLabel.widthAnchor.constraint(equalToConstant: 75).isActive = true
+                    
+                }
+                return cell
+            }
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        print(reminder.list, "This is the list")
         previousDay = reminder.day
         previousStartHour = reminder.startHour
         previousStartMinute = reminder.startMinute
         previousEndHour = reminder.endHour
         previousEndMinute = reminder.endMinute
         
-        var tableView = UITableView()
         self.view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
@@ -340,10 +396,17 @@ class EditTimeViewController: UIViewController, UITableViewDelegate, UITableView
         tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 60).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -150).isActive = true
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
-        
+        self.view.addSubview(bottomTableView)
+        bottomTableView.translatesAutoresizingMaskIntoConstraints = false
+        bottomTableView.topAnchor.constraint(equalTo: tableView.bottomAnchor).isActive = true
+        bottomTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        bottomTableView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
+        bottomTableView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+        bottomTableView.delegate = self
+        bottomTableView.dataSource = self
         let containerView = UIView()
         self.view.addSubview(containerView)
         containerView.translatesAutoresizingMaskIntoConstraints = false

@@ -75,7 +75,7 @@ class SetBirthdayViewController: UIViewController, UIImagePickerControllerDelega
             present(segueController, animated: true, completion: nil)
             
         } else {
-        let alert = UIAlertController(title: "Sorry", message: "You have to be atleast 13 to be on Elevated Pitch", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Sorry", message: "You have to be atleast 13 to be on NXTPitch", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (alert: UIAlertAction!) in self.handleReturnToLogin()}))
             
             

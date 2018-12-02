@@ -14,8 +14,8 @@ import AVFoundation
 //This is where you see your profile Page
 class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-
-    
+    var imageType = Int()
+    var logoImage = UIImage()
     //INITIALIZATION OF VARIABLES 
     
     class urlTap: UIButton {
@@ -118,7 +118,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
                 let alert = UIAlertController(title: "Add in a link", message: nil, preferredStyle: .alert)
                 alert.addTextField(configurationHandler: { (textField) in
                     
-                    textField.placeholder = "LinkedIn Link (include https://)"
+                    textField.placeholder = "Company Link (include https://)"
                     
                     
                 })
@@ -512,14 +512,20 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         })
     }
     
-    
+    func handleAddLogo() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        imageType = 1
+        present(picker, animated: true, completion: nil)
+        
+    }
     
     
     func handleAddProfilePic() {
         
         let picker = UIImagePickerController()
         picker.delegate = self
-        
+        imageType = 0
         present(picker, animated: true, completion: nil)
     }
     
@@ -539,7 +545,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         self.view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
-        titleLabel.text = "Elevated Pitch"
+        titleLabel.text = "NXTPitch"
         titleLabel.textColor = UIColor.white
         titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -691,24 +697,24 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
     }
 
     
-    func generateRandomString(length: Int) -> String {
-        
-        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        
-        let allowedCharsCount = UInt32(allowedChars.characters.count)
-        
-        var randString = ""
-        
-        for _ in 0..<length {
-            let randomNum = Int(arc4random_uniform(allowedCharsCount))
-            let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
-            let newCharacter = allowedChars[randomIndex]
-            randString += String(newCharacter)
-            
-        }
-        
-        return randString
-    }
+//    func generateRandomString(length: Int) -> String {
+//
+//        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+//
+//        let allowedCharsCount = UInt32(allowedChars.characters.count)
+//
+//        var randString = ""
+//
+//        for _ in 0..<length {
+//            let randomNum = Int(arc4random_uniform(allowedCharsCount))
+//            let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
+//            let newCharacter = allowedChars[randomIndex]
+//            randString += String(newCharacter)
+//
+//        }
+//
+//        return randString
+//    }
     
     func editPositionSlashInstitution() {
          let segueController = EditPositionViewController()
@@ -767,7 +773,7 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
                 return 150
                 
             default:
-                 return 80
+                 return 150
                 
             }
         }
@@ -1020,7 +1026,14 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             firstVideoLabel.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
             firstVideoLabel.topAnchor.constraint(equalTo: cell.topAnchor, constant: 10).isActive = true
             
-            
+            let backView = UIView()
+            cell.addSubview(backView)
+            backView.translatesAutoresizingMaskIntoConstraints = false
+            backView.heightAnchor.constraint(equalToConstant: height).isActive = true
+            backView.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            backView.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            backView.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+            backView.backgroundColor = UIColor.black
            
             cell.addSubview(firstVideoImageView)
             firstVideoImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -1030,7 +1043,15 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             firstVideoImageView.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
             firstVideoImageView.layer.borderWidth = 0.5
             firstVideoImageView.isUserInteractionEnabled = true
-            
+            if (firstVideoImageView.image?.size.height != nil && firstVideoImageView.image?.size.width != nil) {
+                if (firstVideoImageView.image?.size.height.isLess(than: (firstVideoImageView.image?.size.width)!))! {
+                    firstVideoImageView.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                } else {
+                    firstVideoImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3 ).isActive = true
+                }
+            } else {
+                firstVideoImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width / 2).isActive = true
+            }
             cell.addSubview(caption1Label)
             caption1Label.translatesAutoresizingMaskIntoConstraints = false
             caption1Label.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
@@ -1091,6 +1112,15 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             
             
             
+            let backView2 = UIView()
+            cell.addSubview(backView2)
+            backView2.translatesAutoresizingMaskIntoConstraints = false
+            backView2.heightAnchor.constraint(equalToConstant: height).isActive = true
+            backView2.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            backView2.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            backView2.topAnchor.constraint(equalTo: supplementalVideoLabel.bottomAnchor, constant: 50).isActive = true
+            backView2.backgroundColor = UIColor.black
+            
             
             var supplementalPlayButton = playButton()
             cell.addSubview(supplementalImageView)
@@ -1111,7 +1141,15 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             supplementalImageView.translatesAutoresizingMaskIntoConstraints = false
             supplementalImageView.heightAnchor.constraint(equalToConstant: height).isActive = true
             supplementalImageView.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-            supplementalImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            if (supplementalImageView.image?.size.height != nil && supplementalImageView.image?.size.width != nil) {
+                if (supplementalImageView.image?.size.height.isLess(than: (supplementalImageView.image?.size.width)!))! {
+                    supplementalImageView.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                } else {
+                    supplementalImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3 ).isActive = true
+                }
+            } else {
+                supplementalImageView.widthAnchor.constraint(equalToConstant: cell.bounds.width / 2).isActive = true
+            }
             supplementalImageView.topAnchor.constraint(equalTo: supplementalVideoLabel.bottomAnchor, constant: 50).isActive = true
             supplementalImageView.layer.borderWidth = 0.5
             supplementalImageView.isUserInteractionEnabled = true
@@ -1133,6 +1171,16 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             changeSupplemental1.addTarget(self, action: #selector(chooseVideo), for: .touchUpInside)
             
 
+            
+            let backView3 = UIView()
+            cell.addSubview(backView3)
+            backView3.translatesAutoresizingMaskIntoConstraints = false
+            backView3.heightAnchor.constraint(equalToConstant: height).isActive = true
+            backView3.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            backView3.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            backView3.topAnchor.constraint(equalTo: supplementalImageView.bottomAnchor, constant: 75).isActive = true
+            backView3.backgroundColor = UIColor.black
+            
             cell.addSubview(supplementalImageView2)
             var supplementalPlayButton2 = playButton()
             if (supplementalVideoURL2 == "AddIcon") {
@@ -1151,10 +1199,18 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             supplementalImageView2.translatesAutoresizingMaskIntoConstraints = false
             supplementalImageView2.heightAnchor.constraint(equalToConstant: height).isActive = true
             supplementalImageView2.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-            supplementalImageView2.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
             supplementalImageView2.topAnchor.constraint(equalTo: supplementalImageView.bottomAnchor, constant: 75).isActive = true
             supplementalImageView2.layer.borderWidth = 0.5
             supplementalImageView2.isUserInteractionEnabled = true
+            if (supplementalImageView2.image?.size.height != nil && supplementalImageView2.image?.size.width != nil) {
+                if (supplementalImageView2.image?.size.height.isLess(than: (supplementalImageView2.image?.size.width)!))! {
+                    supplementalImageView2.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                } else {
+                    supplementalImageView2.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3 ).isActive = true
+                }
+            } else {
+                supplementalImageView2.widthAnchor.constraint(equalToConstant: cell.bounds.width / 2).isActive = true
+            }
             
             let changeSupplemental2 = UIButton()
             cell.addSubview(changeSupplemental2)
@@ -1171,6 +1227,16 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             changeSupplemental2.tag = 3
             changeSupplemental2.addTarget(self, action: #selector(chooseVideo), for: .touchUpInside)
             
+            
+            
+            let backView4 = UIView()
+            cell.addSubview(backView4)
+            backView4.translatesAutoresizingMaskIntoConstraints = false
+            backView4.heightAnchor.constraint(equalToConstant: height).isActive = true
+            backView4.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+            backView4.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
+            backView4.topAnchor.constraint(equalTo: supplementalImageView2.bottomAnchor, constant: 75).isActive = true
+            backView4.backgroundColor = UIColor.black
             
             cell.addSubview(supplementalImageView3)
             var supplementalPlayButton3 = playButton()
@@ -1192,10 +1258,18 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
             supplementalImageView3.translatesAutoresizingMaskIntoConstraints = false
             supplementalImageView3.heightAnchor.constraint(equalToConstant: height).isActive = true
             supplementalImageView3.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
-            supplementalImageView3.widthAnchor.constraint(equalToConstant: cell.bounds.width).isActive = true
             supplementalImageView3.topAnchor.constraint(equalTo: supplementalImageView2.bottomAnchor, constant: 75).isActive = true
             supplementalImageView3.layer.borderWidth = 0.5
             supplementalImageView3.isUserInteractionEnabled = true
+            if (supplementalImageView3.image?.size.height != nil && supplementalImageView3.image?.size.width != nil) {
+                if (supplementalImageView3.image?.size.height.isLess(than: (supplementalImageView3.image?.size.width)!))! {
+                    supplementalImageView3.widthAnchor.constraint(equalTo: cell.widthAnchor).isActive = true
+                } else {
+                    supplementalImageView3.widthAnchor.constraint(equalToConstant: cell.bounds.width / 3 ).isActive = true
+                }
+            } else {
+                supplementalImageView3.widthAnchor.constraint(equalToConstant: cell.bounds.width / 2).isActive = true
+            }
             
             let changeSupplemental3 = UIButton()
             
@@ -1524,14 +1598,28 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
                 interestsButton.translatesAutoresizingMaskIntoConstraints = false
                 interestsButton.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
                 interestsButton.widthAnchor.constraint(equalToConstant: cell.bounds.width * 0.5).isActive = true
-                interestsButton.centerYAnchor.constraint(equalTo: cell.centerYAnchor).isActive = true
+                interestsButton.centerYAnchor.constraint(equalTo: cell.topAnchor, constant: 50).isActive = true
                 interestsButton.addTarget(self, action: #selector(handleMoveToInterests), for: .touchUpInside)
                 interestsButton.setTitle("Interested In?", for: .normal)
                 interestsButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
                 interestsButton.setTitleColor(UIColor.white, for: .normal)
                 interestsButton.layer.cornerRadius = 10
                 interestsButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
-
+                
+                
+                let addLogoButton = UIButton()
+                cell.addSubview(addLogoButton)
+                addLogoButton.translatesAutoresizingMaskIntoConstraints = false
+                addLogoButton.centerXAnchor.constraint(equalTo: cell.centerXAnchor).isActive = true
+                addLogoButton.widthAnchor.constraint(equalToConstant: cell.bounds.width * 0.5).isActive = true
+                addLogoButton.topAnchor.constraint(equalTo: interestsButton.bottomAnchor, constant: 20).isActive = true
+                addLogoButton.addTarget(self, action: #selector(handleAddLogo), for: .touchUpInside)
+                addLogoButton.setTitle("Add in your logo", for: .normal)
+                addLogoButton.titleLabel?.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 20)
+                addLogoButton.setTitleColor(UIColor.white, for: .normal)
+                addLogoButton.layer.cornerRadius = 10
+                addLogoButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
+                
             default:
                 break
                 
@@ -1593,13 +1681,39 @@ class ProfilePageViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
         let someImage = pickedImageFromPicker.jpeg(.high)
-        
+        if (imageType == 0) {
         profileImageView.image = UIImage(data: someImage!)
         profileImageView.image = resizeImage(image: profileImageView.image!, targetSize: CGSize(width: 130, height: 130))
         uploadIntoDatabase()
+        } else {
+            logoImage = UIImage(data: someImage!)!
+            uploadLogo()
+        }
     }
     
-    
+    func uploadLogo() {
+        var imageName = NSUUID().uuidString
+        imageName.append("-Logo")
+        let storageRef = FIRStorage.storage().reference().child("\(imageName).jpg")
+        
+        if let uploadData = UIImageJPEGRepresentation(logoImage, 0.4) {
+            storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
+                
+                if (error != nil) {
+                    return
+                }
+                
+                if let logoImageURL = metadata?.downloadURL()?.absoluteString {
+                    let value = ["logoImageURL": logoImageURL]
+                    let uid = FIRAuth.auth()?.currentUser?.uid
+                    var ref = FIRDatabase.database().reference().child("users").child(uid!)
+                    ref.updateChildValues(value)
+                }
+                
+                
+            })
+        }
+    }
     //Place the image found in picker into the database
     func uploadIntoDatabase() {
         let imageName = NSUUID().uuidString

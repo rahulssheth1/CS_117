@@ -26,7 +26,7 @@ class SetPasswordViewController: UIViewController {
     let password = UITextField()
     let confirmPassword = UITextField()
     var curUser = SignUpUser()
-    
+    var isRecruiter = Int() 
     
     //-------------------------------------------------------------------------------------------
 
@@ -46,6 +46,38 @@ class SetPasswordViewController: UIViewController {
         present(segueController, animated: true, completion: nil)
     }
     
+    func handleContinueRecruiter() {
+        if (password.text != confirmPassword.text) {
+            let alert = UIAlertController(title: "Failure", message: "Passwords don't match", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            FIRAuth.auth()?.createUser(withEmail: curUser.email, password: password.text!, completion: { (user: FIRUser?, error) in
+                
+                if error != nil {
+                    var errorString = "We encountered an error: "
+                    errorString.append((error?.localizedDescription)!)
+                    let alert = UIAlertController(title: "Failure", message: errorString, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    
+                } else {
+                    let uid = user?.uid
+                    let value = NSString(string: "true")
+                    let dictionary = ["name": self.curUser.name, "Email": self.curUser.email, "Occupation": "Employer" as NSString] as [String : Any]
+                    let dictionary2 = ["FirstTimeSignUp": value, "FirstTimeConnect": value, "FirstTimeReject": value, "FirstTimeCalendar": value, "FirstTimeSearch": value]
+                    FIRDatabase.database().reference().child("users").child(uid!).setValue(dictionary)
+                    FIRDatabase.database().reference().child("users").child(uid!).child("HelpViews").updateChildValues(dictionary2)
+                    
+                    let segueController = FeedController()
+                    self.present(segueController, animated: true, completion: nil)
+                }
+                
+            })
+            
+        }
+    }
+    
     func handleContinue() {
         
         if (password.text != confirmPassword.text) {
@@ -58,6 +90,7 @@ class SetPasswordViewController: UIViewController {
                 if error != nil {
                     var errorString = "We encountered an error: "
                     errorString.append((error?.localizedDescription)!)
+                    print(error.debugDescription, "This is what's wrong")
                    let alert = UIAlertController(title: "Failure", message: errorString, preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
@@ -65,7 +98,7 @@ class SetPasswordViewController: UIViewController {
                 } else {
                 let uid = user?.uid
                 let value = NSString(string: "true")
-                let dictionary = ["Name": self.curUser.name, "Email": self.curUser.email, "Occupation": "Student" as NSString] as [String : Any]
+                let dictionary = ["name": self.curUser.name, "Email": self.curUser.email, "Occupation": "Student" as NSString] as [String : Any]
                     let dictionary2 = ["FirstTimeSignUp": value, "FirstTimeConnect": value, "FirstTimeReject": value, "FirstTimeCalendar": value, "FirstTimeSearch": value]
                 FIRDatabase.database().reference().child("users").child(uid!).setValue(dictionary)
                 FIRDatabase.database().reference().child("users").child(uid!).child("HelpViews").updateChildValues(dictionary2)
@@ -159,8 +192,11 @@ class SetPasswordViewController: UIViewController {
         continueButton.setTitleColor(UIColor.white, for: .normal)
         continueButton.layer.cornerRadius = 10
         continueButton.backgroundColor = UIColor(red: 100/255, green: 149/255, blue: 237/255, alpha: 1)
+        if (self.isRecruiter == 1) {
+            continueButton.addTarget(self, action: #selector(handleContinueRecruiter), for: .touchUpInside)
+        } else {
         continueButton.addTarget(self, action: #selector(handleContinue), for: .touchUpInside)
-        
+        }
 
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         

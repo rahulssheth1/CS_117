@@ -73,7 +73,7 @@ class SetReminderViewController1: UIViewController, UIPickerViewDataSource, UIPi
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15).isActive = true
-        descriptionLabel.text = "Specify a time frame a recruiter can contact you. Please choose a time you're free every week."
+        descriptionLabel.text = "Specify when you want the event to start!"
         descriptionLabel.textAlignment = .center
         descriptionLabel.widthAnchor.constraint(equalToConstant: self.view.bounds.width * 0.70).isActive = true
         descriptionLabel.numberOfLines = 0

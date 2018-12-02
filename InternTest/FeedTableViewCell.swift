@@ -27,7 +27,7 @@ class FeedTableViewCell: UITableViewCell {
         if (keyPath == "image") {
             activityIndicator.hidesWhenStopped = true
             activityIndicator.stopAnimating()
-            
+           
         }
     }
     deinit {

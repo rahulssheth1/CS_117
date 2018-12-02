@@ -52,6 +52,7 @@
 		B7BC83C31FEDEC2800331CBC /* NXTPitchProposal.pdf in Resources */ = {isa = PBXBuildFile; fileRef = B7BC83C21FEDEC2800331CBC /* NXTPitchProposal.pdf */; };
 		B7BC83C51FEDF32500331CBC /* ResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC83C41FEDF32500331CBC /* ResumeViewController.swift */; };
 		B7BC83C71FEF185C00331CBC /* GoogleUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7BC83C61FEF185C00331CBC /* GoogleUploadVC.swift */; };
+		B7C2597F21AFE81E00D684F5 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C2597E21AFE81E00D684F5 /* FriendsViewController.swift */; };
 		B7C658D91E8EEB1A0081B06E /* SetPositionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C658D81E8EEB1A0081B06E /* SetPositionViewController.swift */; };
 		B7C658DB1E8F125C0081B06E /* StudentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C658DA1E8F125C0081B06E /* StudentViewController.swift */; };
 		B7D480131F173D600080E8C2 /* SetReminderViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D480121F173D600080E8C2 /* SetReminderViewController1.swift */; };
@@ -71,6 +72,7 @@
 		B7F5075B1E4EFE10002F686B /* CameraChooseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5075A1E4EFE10002F686B /* CameraChooseViewController.swift */; };
 		B7F5075D1E4F19AB002F686B /* SetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F5075C1E4F19AB002F686B /* SetPasswordViewController.swift */; };
 		B7F63DD21E30762E009770BE /* ChatController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F63DD11E30762E009770BE /* ChatController.swift */; };
+		B7F7DA60200C27F400DCD95A /* RecruiterFeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F7DA5F200C27F400DCD95A /* RecruiterFeedTableViewCell.swift */; };
 		DDA7682EF6B6FBF96A17C99D /* Pods_InternTestUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1DCA9AAE2535E91572A28A /* Pods_InternTestUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +146,7 @@
 		B7BC83C21FEDEC2800331CBC /* NXTPitchProposal.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = NXTPitchProposal.pdf; sourceTree = "<group>"; };
 		B7BC83C41FEDF32500331CBC /* ResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResumeViewController.swift; sourceTree = "<group>"; };
 		B7BC83C61FEF185C00331CBC /* GoogleUploadVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleUploadVC.swift; sourceTree = "<group>"; };
+		B7C2597E21AFE81E00D684F5 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		B7C658D81E8EEB1A0081B06E /* SetPositionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPositionViewController.swift; sourceTree = "<group>"; };
 		B7C658DA1E8F125C0081B06E /* StudentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentViewController.swift; sourceTree = "<group>"; };
 		B7D480121F173D600080E8C2 /* SetReminderViewController1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReminderViewController1.swift; sourceTree = "<group>"; };
@@ -164,6 +167,7 @@
 		B7F5075A1E4EFE10002F686B /* CameraChooseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraChooseViewController.swift; sourceTree = "<group>"; };
 		B7F5075C1E4F19AB002F686B /* SetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPasswordViewController.swift; sourceTree = "<group>"; };
 		B7F63DD11E30762E009770BE /* ChatController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatController.swift; sourceTree = "<group>"; };
+		B7F7DA5F200C27F400DCD95A /* RecruiterFeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecruiterFeedTableViewCell.swift; sourceTree = "<group>"; };
 		CB99A5AF77DB46DA14925F37 /* Pods_InternTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InternTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5109AF7484BDB7F87700171 /* Pods-InternTestTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InternTestTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InternTestTests/Pods-InternTestTests.release.xcconfig"; sourceTree = "<group>"; };
 		D6BF9C47952E2E5E29250BA2 /* Pods_InternTestTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InternTestTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -321,6 +325,7 @@
 				B7F63DD11E30762E009770BE /* ChatController.swift */,
 				B794BE8A1F7598820099A344 /* ChatLogViewController.swift */,
 				B732FAA31E2CD480005514CE /* FeedController.swift */,
+				B7F7DA5F200C27F400DCD95A /* RecruiterFeedTableViewCell.swift */,
 				B76AF1F51F2AF52C00E69252 /* FeedTableViewCell.swift */,
 				B7C658DA1E8F125C0081B06E /* StudentViewController.swift */,
 				B73ABCC71F5A655900CA91A6 /* StudentScheduleViewController.swift */,
@@ -362,6 +367,7 @@
 				B7AE89381F2BC15300914699 /* ForgotPasswordLandingViewController.swift */,
 				B7C658D81E8EEB1A0081B06E /* SetPositionViewController.swift */,
 				B7097D921E108AEC00CA1C56 /* ProfilePageViewController.swift */,
+				B7C2597E21AFE81E00D684F5 /* FriendsViewController.swift */,
 				B7E323081FFB034F004B0D46 /* AddDomainsViewController.swift */,
 				B7BC83C41FEDF32500331CBC /* ResumeViewController.swift */,
 				B7BC83C61FEF185C00331CBC /* GoogleUploadVC.swift */,
@@ -545,13 +551,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InternTest-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		296F0D3DF245E488E9EE0874 /* [CP] Copy Pods Resources */ = {
@@ -590,13 +599,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InternTestUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		79700C91DDBE9939056C9E46 /* [CP] Embed Pods Frameworks */ = {
@@ -620,13 +632,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InternTestTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CC64315A5A31F6374905020A /* [CP] Embed Pods Frameworks */ = {
@@ -650,9 +665,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-InternTest/Pods-InternTest-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -665,9 +683,22 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-InternTest/Pods-InternTest-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleAPIClientForREST/GoogleAPIClientForREST.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/mailgun/mailgun.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleAPIClientForREST.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/mailgun.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -713,6 +744,7 @@
 				B7D4801D1F1F40120080E8C2 /* TodoList.swift in Sources */,
 				B7D480131F173D600080E8C2 /* SetReminderViewController1.swift in Sources */,
 				B7C658DB1E8F125C0081B06E /* StudentViewController.swift in Sources */,
+				B7C2597F21AFE81E00D684F5 /* FriendsViewController.swift in Sources */,
 				B7EEB1391F47D65A00F101C6 /* AnimationController.swift in Sources */,
 				B752D4401F0AFC8800EAC75B /* SearchViewController.swift in Sources */,
 				B7AE89391F2BC15300914699 /* ForgotPasswordLandingViewController.swift in Sources */,
@@ -725,6 +757,7 @@
 				B7A2C3571F718FC800A550C6 /* ConfirmVideoViewController.swift in Sources */,
 				B73ABCC21F56AD2600CA91A6 /* SettingsViewController.swift in Sources */,
 				B732FAA61E2D82FD005514CE /* User.swift in Sources */,
+				B7F7DA60200C27F400DCD95A /* RecruiterFeedTableViewCell.swift in Sources */,
 				B7AE893B1F2C627500914699 /* ChangePasswordViewController.swift in Sources */,
 				B7E3B2F31F749ADE008320C8 /* EditPositionViewController.swift in Sources */,
 				B7AE893D1F2FE1E000914699 /* CustomCell.swift in Sources */,

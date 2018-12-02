@@ -321,7 +321,7 @@ class NotificationCenterViewController : UIViewController, UITableViewDelegate, 
             
             todoItem.title = "Reminder: Meeting with "
             todoItem.title.append((notification?.user?.name)!)
-            todoItem.UUID = "Elevated Pitch"
+            todoItem.UUID = "NXTPitch"
             todoItem.deadline = date
             TodoList.sharedInstance.addItem(item: todoItem)
             //Have to set up dictionary["Day"], dictionary["Start Time"] and dictionary["End Time"]
@@ -369,7 +369,7 @@ class NotificationCenterViewController : UIViewController, UITableViewDelegate, 
                 
                 todoItem.title = "Reminder: Meeting with "
                 todoItem.title.append((notification?.user?.name)!)
-                todoItem.UUID = "Elevated Pitch"
+                todoItem.UUID = "NXTPitch"
                 todoItem.deadline = date
                 TodoList.sharedInstance.addItem(item: todoItem)
                 
@@ -444,7 +444,7 @@ class NotificationCenterViewController : UIViewController, UITableViewDelegate, 
                 
                 todoItem.title = "Reminder: Meeting with "
                 todoItem.title.append((notification?.user?.name)!)
-                todoItem.UUID = "Elevated Pitch"
+                todoItem.UUID = "NXTPitch"
                 todoItem.deadline = self.picker.date
                 TodoList.sharedInstance.addItem(item: todoItem)
                
@@ -571,7 +571,7 @@ class NotificationCenterViewController : UIViewController, UITableViewDelegate, 
         self.view.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
-        titleLabel.text = "Elevated Pitch"
+        titleLabel.text = "NXTPitch"
         titleLabel.textColor = UIColor.white
         titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true

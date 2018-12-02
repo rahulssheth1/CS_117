@@ -89,44 +89,79 @@ class SetUpFreeTimeViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     func fetchReminders() {
-        let ref = FIRDatabase.database().reference().child("users").child((FIRAuth.auth()?.currentUser?.uid)!).child("Personal Reminders")
-        ref.observe(.childAdded, with: { (snapshot) in
+        let ref2 = FIRDatabase.database().reference().child("users")
+        ref2.observe(.value, with: { (snapshot) in
             let dictionary = snapshot.value as? [String: AnyObject]
-            var reminder = Reminder()
-            
-            reminder.day = (dictionary?["Day"] as? String)!
-            reminder.startHour = dictionary!["StartHour"] as? NSNumber as! Int
-            reminder.startMinute = dictionary!["StartMinute"] as? NSNumber as! Int
-            reminder.endHour = dictionary!["EndHour"] as? NSNumber as! Int
-            reminder.endMinute = dictionary!["EndMinute"] as? NSNumber as! Int
-            reminder.id = snapshot.key
-            
-            var dateComponents = DateComponents()
-            dateComponents.hour = reminder.startHour
-            dateComponents.minute = reminder.startMinute
-            dateComponents.second = 0
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            let date = Calendar.current.date(from: dateComponents)
-            reminder.timeString1 = formatter.string(from: date!)
-            var dateComponents2 = DateComponents()
-            dateComponents2.hour = reminder.endHour
-            dateComponents2.minute = reminder.endMinute
-            dateComponents2.second = 0
-            
-            reminder.timeString2 = formatter.string(from: Calendar.current.date(from: dateComponents2)!)
-            
-            
-            if (self.checkList[reminder.day]?.count == nil) {
-                self.checkList[reminder.day] = [reminder]
-            } else {
-                self.checkList[reminder.day]?.append(reminder)
-            }
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            var str = FIRAuth.auth()?.currentUser?.uid
+            let new_dict = dictionary?[str!] as! [String : AnyObject]
+            let new_dict2 = new_dict["Personal Reminders"] as? [String : AnyObject]
+            let key = new_dict2?.keys
+            for k in key! {
+                let final_dict = new_dict2![k] as? [String : AnyObject]
+                
+                var reminder = Reminder()
+                
+                reminder.day = (final_dict?["Day"] as? String)!
+                reminder.startHour = final_dict?["StartHour"] as? NSNumber as! Int
+                reminder.startMinute = final_dict?["StartMinute"] as? NSNumber as! Int
+                reminder.endHour = final_dict?["EndHour"] as? NSNumber as! Int
+                reminder.endMinute = final_dict?["EndMinute"] as? NSNumber as! Int
+                var count = 0
+                var list = [User]()
+                while count <= 20 {
+                    var string = "User " + String(count)
+                    let values = final_dict?.keys
+                    if (values?.contains(string))! {
+                        var uid = final_dict![string] as? String
+                        var cur_user_dict = dictionary![uid!] as! [String : AnyObject]
+                        var u = User()
+                        u.uid = uid!
+                        u.name = (cur_user_dict["name"] as? String)!
+                        let cur_keys = cur_user_dict.keys
+                        if (cur_keys.contains("profileImageURL")) {
+                            u.profileImageURL = (cur_user_dict["profileImageURL"] as? String)!
+                        }
+                        list.append(u)
+                    } else {
+                        break
+                    }
+                    count = count + 1
+                }
+                reminder.list = list
+                reminder.id = snapshot.key
+                
+                var dateComponents = DateComponents()
+                dateComponents.hour = reminder.startHour
+                dateComponents.minute = reminder.startMinute
+                dateComponents.second = 0
+                let formatter = DateFormatter()
+                formatter.timeStyle = .short
+                let date = Calendar.current.date(from: dateComponents)
+                reminder.timeString1 = formatter.string(from: date!)
+                var dateComponents2 = DateComponents()
+                dateComponents2.hour = reminder.endHour
+                dateComponents2.minute = reminder.endMinute
+                dateComponents2.second = 0
+                
+                reminder.timeString2 = formatter.string(from: Calendar.current.date(from: dateComponents2)!)
+                
+                
+                if (self.checkList[reminder.day]?.count == nil) {
+                    self.checkList[reminder.day] = [reminder]
+                } else {
+                    self.checkList[reminder.day]?.append(reminder)
+                }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    
+                }
                 
             }
+            
+            
         })
+        
+        
     }
     
     
@@ -201,7 +236,7 @@ class SetUpFreeTimeViewController: UIViewController, UITableViewDelegate, UITabl
         topView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 30)
-        titleLabel.text = "Elevated Pitch"
+        titleLabel.text = "NXTPitch"
         titleLabel.textColor = UIColor.white
         titleLabel.centerXAnchor.constraint(equalTo: topView.centerXAnchor).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
